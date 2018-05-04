@@ -1,0 +1,65 @@
+en:
+  date:
+    formats:
+      web_input:                   "%d-%b-%Y"
+  number:
+    percentage:
+      format:
+        separator:                 "."
+        delimiter:                 ","
+    precision:
+      format:
+        separator:                 "."
+        delimiter:                 ","
+    currency:
+      format:
+        format:                    "%n"
+        negative_format:           "- %n"
+        precision:                 2
+        separator:                 "."
+        delimiter:                 ","
+  ffb:
+    "yes":           "yes"
+    "no":            "no"
+    all:             all
+    date:
+      placeholder:   "dd-mmm-yyyy"
+  glossary:
+    group:
+      purpose:
+        label:       Whatfor?
+        options:
+          yapping:
+            label:       Yapping
+            description: For extensive yap
+          fighting:
+            label:       Fighting
+            description: or bickering or squabbling
+    group_person:
+      person:
+        label:       Who
+    person:
+      city:
+        label:       City
+      fingers:
+        label:       Finger count
+      happy:
+        label:       Happy
+      height:
+        label:       Tallness
+      name:
+        label:       Name
+        description: The name of the person
+        placeholder: smith
+      import_id:
+        label:       Import identifier
+      sex:
+        label:       sex
+      type:
+        label:       Kind
+        options:
+          blue:      Bluish
+          red:       Reddish
+          green:     Greenish
+  select:
+    please:          Please select...

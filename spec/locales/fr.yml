@@ -1,0 +1,60 @@
+fr:
+  date:
+    abbr_month_names:
+    -
+    - janv
+    - févr
+    formats:
+      web_input:                   "%d-%b-%Y"
+  number:
+    percentage:
+      format:
+        separator:                 ","
+        delimiter:                 " "
+    precision:
+      format:
+        separator:                 ","
+        delimiter:                 " "
+    currency:
+      format:
+        format:                    "%n"
+        negative_format:           "- %n"
+        precision:                 2
+        separator:                 ","
+        delimiter:                 " "
+  ffb:
+    all:           tous
+    date:
+      placeholder: "jj-mmm-aaaa"
+  glossary:
+    group:
+      group_people:
+        label:   Les gens
+    group_person:
+      person:
+        label:    Qui
+    person:
+      bio:
+        label:    Biographie
+      city:
+        label:    Ville
+      dob:
+        label:    "Né(e) le"
+      fingers:
+        label:    Nombre de doigts
+      height:
+        label:    Hauteur
+      name:
+        label:    Nom
+        required: Vous devriez vraiment mettre quelque chose ici
+      secret:
+        label:    Secret
+      sex:
+        label:    sexe
+      type:
+        options:
+          blue:      Un peu bleu
+          red:       Un peu rouge
+          green:     Un peu vert
+  select:
+    please:          Choisir...
