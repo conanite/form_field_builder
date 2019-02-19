@@ -21,11 +21,12 @@ module FormFieldBuilder::SelectFieldBehaviour
     build_form_field(name, opts.merge(array_field: true)) { |fname, val| build_checks fname, val, choices, opts }
   end
 
-  def multi_check_i18n   name, key, opts={} ; multi_check name, select_options_from_i18n(key, opts), opts                   ; end
-  def please_select  name, choices, opts={} ; select name, prepend_please(choices), opts                                    ; end
-  def i18n_select        name, key, opts={} ; select name, select_options_from_i18n(key, opts), opts                        ; end
-  def please_i18n_select name, key, opts={} ; select name, prepend_please(select_options_from_i18n(key, opts)), opts        ; end
-  def please_select_objects name, objs, meth, opts={} ; select name, prepend_please(objs.selectify meth), opts              ; end
+  def multi_check_i18n   name, key, opts={} ; multi_check name, select_options_from_i18n(key, opts), opts            ; end
+  def please_select  name, choices, opts={} ; select name, prepend_please(choices), opts                             ; end
+  def i18n_select        name, key, opts={} ; select name, select_options_from_i18n(key, opts), opts                 ; end
+  def please_i18n_select name, key, opts={} ; select name, prepend_please(select_options_from_i18n(key, opts)), opts ; end
+  def please_select_objects name, objs, meth, opts={} ; select name, prepend_please(objs.selectify meth), opts       ; end
+  def select_objects        name, objs, meth, opts={} ; select name, objs.selectify(meth), opts                      ; end
 
   private
 

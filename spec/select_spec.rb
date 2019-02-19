@@ -67,6 +67,20 @@ RSpec.describe FormFieldBuilder::Decorated do
     expect(fix_field ffb.please_i18n_select("type", "glossary.person.type.options")).to eq expected
   end
 
+  it "should create a select input field with choices from objects and no 'please select' option" do
+    o1 = Person.new id: 516, name: "JOYCE"
+    o2 = Person.new id: 517, name: "YEATS"
+    o3 = Person.new id: 518, name: "SHAW"
+    I18n.locale = :en
+    ffb = form_field_builder GroupPerson.new(person: o3)
+    input = "<select name='group_person[person_id]'>
+<option value='516'>JOYCE</option>
+<option value='517'>YEATS</option>
+<option value='518' selected='selected'>SHAW</option></select>"
+    expected = expectable "group_person-person_id", "Who", input
+    expect(fix_field ffb.select_objects("person_id", [o1, o2, o3], :name)).to eq expected
+  end
+
   it "should create a select input field with choices from objects and a 'please select' option" do
     o1 = Person.new id: 516, name: "JOYCE"
     o2 = Person.new id: 517, name: "YEATS"
