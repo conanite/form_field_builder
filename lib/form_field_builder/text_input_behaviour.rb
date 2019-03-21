@@ -4,7 +4,6 @@ module FormFieldBuilder::TextInputBehaviour
   include ::ActionView::Helpers::NumberHelper
 
   def show_decimal amount, fractionals=1 ; number_with_precision amount, precision: fractionals, significant: false       ; end
-  def show_integer amount                ; number_with_precision amount, precision: 0, significant: false, delimiter: ""  ; end
   def web_date                         d ; (i18n.l d.to_date, format: :web_input) if d                                    ; end
 
   def html_input name, options={ }
@@ -29,7 +28,7 @@ module FormFieldBuilder::TextInputBehaviour
 
   def quantity_input name, options={ }
     build_form_field name, options do |field_name, value|
-      v = value.is_a?(Numeric) ? show_integer(value) : value
+      v = value.is_a?(Numeric) ? number_with_precision(value, precision: 0, significant: false, delimiter: "") : value
       "<input class='numeric' type='text' name='#{field_name}' value='#{h v}'/>"
     end
   end
