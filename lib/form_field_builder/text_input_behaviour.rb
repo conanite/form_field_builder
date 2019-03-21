@@ -3,9 +3,9 @@ require "action_view/helpers/number_helper"
 module FormFieldBuilder::TextInputBehaviour
   include ::ActionView::Helpers::NumberHelper
 
-  def show_decimal amount, fractionals=1 ; number_with_precision amount, precision: fractionals, significant: false ; end
-  def show_integer amount                ; show_decimal amount, 0                                                   ; end
-  def web_date                         d ; (i18n.l d.to_date, format: :web_input) if d                              ; end
+  def show_decimal amount, fractionals=1 ; number_with_precision amount, precision: fractionals, significant: false       ; end
+  def show_integer amount                ; number_with_precision amount, precision: 0, significant: false, delimiter: ""  ; end
+  def web_date                         d ; (i18n.l d.to_date, format: :web_input) if d                                    ; end
 
   def html_input name, options={ }
     build_form_field name, options do |field_name, value|

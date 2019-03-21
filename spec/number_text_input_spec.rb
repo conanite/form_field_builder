@@ -29,7 +29,7 @@ RSpec::describe FormFieldBuilder::Decorated do
 
     it "should create a quantity input field with a value" do
       ffb = form_field_builder Person.new(fingers: 12345)
-      input = "<input class='numeric' type='text' name='person[fingers]' value='12 345'/>"
+      input = "<input class='numeric' type='text' name='person[fingers]' value='12345'/>"
       expected = expectable "person-fingers", "Nombre de doigts", input
       expect(fix_field ffb.quantity_input("fingers")).to eq expected
     end
@@ -68,7 +68,7 @@ RSpec::describe FormFieldBuilder::Decorated do
 
     it "should create a quantity input field with a value" do
       ffb = form_field_builder Person.new(fingers: 12345)
-      input = "<input class='numeric' type='text' name='person[fingers]' value='12,345'/>"
+      input = "<input class='numeric' type='text' name='person[fingers]' value='12345'/>"
       expected = expectable "person-fingers", "Finger count", input
       expect(fix_field ffb.quantity_input("fingers")).to eq expected
     end

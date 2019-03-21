@@ -3,7 +3,6 @@ class FormFieldBuilder::Decorated < FormFieldBuilder::Base
   attr_reader :plain
 
   def self.add_methods mod
-    puts "adding module #{mod.name}"
     include mod
   end
 
