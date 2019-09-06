@@ -91,7 +91,7 @@ class FormFieldBuilder::Base
   end
 
   def hidden name, options={ }
-    "<input type='hidden' name='#{field_name_for name, options}' value='#{h parameterise value_for_field name, options}'/>".html_safe
+    "<input type='hidden' name='#{field_name_for name, options}' value='#{h parameterise value_for_field name, options}#{disabled options}'/>".html_safe
   end
 
   def custom name, options={ }
@@ -102,7 +102,7 @@ class FormFieldBuilder::Base
 
   def text_area name, options={ }
     build_form_field name, options do |field_name, value|
-      "<textarea name='#{field_name}' rows='#{options[:rows] || 6}'#{placeholder options}>#{preserve_newlines h(value)}</textarea>"
+      "<textarea name='#{field_name}' rows='#{options[:rows] || 6}'#{placeholder options}#{disabled options}>#{preserve_newlines h(value)}</textarea>"
     end
   end
 
@@ -110,21 +110,20 @@ class FormFieldBuilder::Base
 
   def password name, options={ }
     build_form_field name, options do |field_name, value|
-      "<input type='password' name='#{field_name}'#{as_attributes options[:input_attributes]}/>"
+      "<input type='password' name='#{field_name}'#{as_attributes options[:input_attributes]}#{disabled options}/>"
     end
   end
 
   def file name, options={ }
     build_form_field name, options do |field_name, value|
-      "<input type='file' name='#{field_name}'#{as_attributes options[:input]}/>"
+      "<input type='file' name='#{field_name}'#{as_attributes options[:input]}#{disabled options}/>"
     end
   end
 
   def check name, check_value, options={ }
     build_form_field name, options do |field_name, value|
-      disabled = (options[:disabled]) ? " disabled='disabled'" : ''
       checked = (check_value == value) ? " checked='checked'" : ''
-      "<input type='checkbox' name='#{field_name}' value='#{check_value}'#{checked}#{disabled}/>"
+      "<input type='checkbox' name='#{field_name}' value='#{check_value}'#{checked}#{disabled options}/>"
     end
   end
 
@@ -139,6 +138,7 @@ class FormFieldBuilder::Base
     2
   end
 
+  def disabled           options ; options[:disabled] ? " disabled='disabled'" : ""                       ; end
   def preserve_newlines      txt ; txt.gsub(/\n/, '&#x000A;').gsub(/\r/, '')                              ; end
   def placeholder        options ; options[:placeholder] ? " placeholder='#{options[:placeholder]}'" : "" ; end
   def selectify collection, attr ; collection.selectify(attr)                                             ; end
