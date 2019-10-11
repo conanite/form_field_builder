@@ -72,6 +72,27 @@ RSpec::describe FormFieldBuilder::Decorated do
         expect(fix_field ffb.text_input("name", if: nil)).to eq ""
       end
 
+      it "renders nothing when field_filter obstructs" do
+        ffb = form_field_builder Person.new(name: "Popeye", sex: "yes", phone: "topsecret"), filter: Person.filter_config
+
+        expect(fix_field ffb.text_input("phone")).to eq ""
+
+
+        Entity.gdpr = true
+
+        expected = "<li class='input_row person-phone'>
+<label class='input-label'>
+<span class='label-txt'>Phone</span></label>
+<div class='error_container'></div>
+<input type='text' name='person[phone]' value='topsecret'/></li>"
+
+        expect(fix_field ffb.text_input("phone")).to eq expected
+
+        Entity.gdpr = false
+
+        expect(fix_field ffb.text_input("phone")).to eq ""
+      end
+
       it "does nothing when #if option is false or nil" do
         ffb = form_field_builder nil, input_name_prefix: 'x', class_name: "contact"
         expect(ffb.text_input(:name, if: nil) ).to eq ""

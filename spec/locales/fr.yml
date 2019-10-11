@@ -47,6 +47,8 @@ fr:
       name:
         label:    Nom
         required: Vous devriez vraiment mettre quelque chose ici
+      phone:
+        label:       Phone
       secret:
         label:    Secret
       sex:

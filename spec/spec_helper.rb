@@ -29,7 +29,7 @@ module FormFieldBuilderHelpers
   end
 
   def fix_field txt
-    strip_each_line txt.gsub(/<([^\/])/, "\n<\\1").gsub(/\n\s*\n/, "\n").strip
+    strip_each_line txt.to_s.gsub(/<([^\/])/, "\n<\\1").gsub(/\n\s*\n/, "\n").strip
   end
 end
 
@@ -76,7 +76,11 @@ class AttrDef < Aduki::Initializable
   attr_accessor :macro
 end
 
-class Group < Aduki::Initializable
+class Model < Aduki::Initializable
+  extend FormFieldBuilder::FieldFilter
+end
+
+class Group < Model
   attr_accessor :name, :purpose
   attr_many_finder :find, :id, :group_people, class_name: "GroupPerson"
   def self.reflect_on_association name
@@ -84,13 +88,38 @@ class Group < Aduki::Initializable
   end
 end
 
-class Person < Aduki::Initializable
-  attr_accessor :id, :name, :height, :fingers, :import_id, :city, :sex, :photo, :type, :bio, :secret
+class Entity < Model
+  attr_accessor :phone
+
+  @@showphone = false
+
+  def self.gdpr field, obj
+    @@showphone
+  end
+
+  def self.gdpr= b
+    @@showphone = b
+  end
+
+  filter_config proc_filter phone: method(:gdpr)
+end
+
+class Person < Entity
+  attr_accessor :id, :name, :height, :fingers, :import_id, :city, :sex, :photo, :type, :bio, :secret, :phone
   aduki happy: AdukiBoolean, dob: Date
+
+  @@showsex = true
+
+  def self.dating?
+    @@showsex
+  end
+
+  filter_config proc_filter sex: method(:dating?)
+
   def to_param ; id ; end
 end
 
-class GroupPerson < Aduki::Initializable
+class GroupPerson < Model
   attr_accessor :id
   attr_finder :find, :id, :person
   attr_finder :find, :id, :group
