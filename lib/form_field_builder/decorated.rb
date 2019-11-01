@@ -27,7 +27,7 @@ class FormFieldBuilder::Decorated < FormFieldBuilder::Base
     return locally(options[:lbl]) if options[:lbl]
     override_field_label(name_for_key, options) ||
       options[:label] ||
-      i18n.t(gloss_key(name_for_key, (options[:label_subkey] || :label)), raise: true)
+      texts.label(target_class_name, name_for_key, options)
   end
 
   def build_label_node name_for_key, options
@@ -39,8 +39,8 @@ class FormFieldBuilder::Decorated < FormFieldBuilder::Base
   end
 
   def build_description name_for_key, options={}
-    description = i18n.t(gloss_key(name_for_key, (description_key options[:description]))) if options[:description]
-    description =  locally(options[:desc])                                                 unless options[:desc].blank?
+    description = texts.description(target_class_name, name_for_key, options) if options[:description]
+    description =  locally(options[:desc])                                    unless options[:desc].blank?
     description ? "<p class='description'>#{description}</p>" : ""
   end
 
@@ -53,16 +53,13 @@ class FormFieldBuilder::Decorated < FormFieldBuilder::Base
     "<#{tag} class='input_row #{css_class}'#{as_attributes options[:tag_attributes]}>#{options[:before_label]}#{label_node}#{error}#{desc_node}#{content}</#{tag}>".html_safe
   end
 
-  def description_key             k ; k == true ? :description : k                                       ; end
-  def attr_key                 attr ; "#{target_class_name}.#{attr}"                                     ; end
-  def gloss_key       attr, feature ; "glossary.#{attr_key attr}.#{feature}"                             ; end
   def normalized_name name, options ; options[:preserve_id_suffix] ? name : name.to_s.gsub(/_ids?$/, '') ; end
   def label_text   name, options={} ; field_label normalized_name(name, options), options                ; end
 
   def build_form_field name, options={ }
     self.filtering name, options do
       name_for_key = normalized_name name, options
-      options[:placeholder] = i18n.t(gloss_key(name_for_key, :placeholder)) if (options[:placeholder] == true)
+      options[:placeholder] = texts.placeholder(target_class_name, name_for_key, options) if (options[:placeholder] == true)
       options[:name_for_key] = name_for_key
       form_field name_for_key, yield(field_name_for(name, options), value_for_field(name, options)), "#{css_class_prefix}-#{name} #{options[:css_class]}".strip, options
     end

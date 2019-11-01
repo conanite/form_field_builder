@@ -1,15 +1,20 @@
 require 'i18n'
+require 'form_field_builder/i18n_text_provider'
 require 'active_support/inflector'
 require 'active_support/core_ext/object/blank'
 require 'active_support/core_ext/string/output_safety'
 
+#
+# #texts is an object providing #label, #placeholder, and #description methods to decorate form fields
+# #i18n provides translations for simple options, eg "yes" and "no"
+#
 class FormFieldBuilder::Base
   include ERB::Util
   include FormFieldBuilder::TextInputBehaviour
   include FormFieldBuilder::RadioFieldBehaviour
   include FormFieldBuilder::SelectFieldBehaviour
 
-  attr_accessor :target, :input_name_prefix, :css_class_prefix, :target_class_name, :i18n
+  attr_accessor :target, :input_name_prefix, :css_class_prefix, :target_class_name, :i18n, :texts
 
   def initialize target=nil, options={ }
     @target = target
@@ -17,6 +22,7 @@ class FormFieldBuilder::Base
     @input_name_prefix = options[:input_name_prefix] || @target_class_name
     @css_class_prefix  = @input_name_prefix.to_s.gsub(/\[/, "-").gsub(/\]/, '')
     @i18n              = options[:i18n] || I18n
+    @texts             = options[:texts] || FormFieldBuilder::I18nTextProvider.new(i18n: i18n)
   end
 
   def locally obj

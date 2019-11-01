@@ -6,12 +6,16 @@ module FormFieldBuilderHelpers
     str.gsub(/^\ +/, "").gsub(/\ +$/, "").gsub(/ *\n\ */, "\n")
   end
 
-  def label_builder *args
-    FormFieldBuilder::LabelOnly.new *args
+  def glossary_texts
+    FormFieldBuilder::I18nTextProvider.new(i18n: I18n, prefix: "glossary")
   end
 
-  def form_field_builder *args
-    FormFieldBuilder::Decorated.new *args
+  def label_builder target, options={}
+    FormFieldBuilder::LabelOnly.new target, { texts: glossary_texts }.merge(options)
+  end
+
+  def form_field_builder target, options={}
+    FormFieldBuilder::Decorated.new target, { texts: glossary_texts }.merge(options)
   end
 
   def expectable cssclass, label, content, desc=nil, tag="li", tag_attributes=""
