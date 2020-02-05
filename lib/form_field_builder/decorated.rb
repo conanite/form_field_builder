@@ -16,7 +16,7 @@ class FormFieldBuilder::Decorated < FormFieldBuilder::Base
 
   def filtering attr, options={}
     return "" if options.key?(:if) && !options[:if]
-    yield if self.filter.show? (options[:depends] || attr), target
+    yield if self.filter.show? (options[:depends] || attr).to_sym, target
   end
 
   def override_field_label name_for_key, options
@@ -57,8 +57,8 @@ class FormFieldBuilder::Decorated < FormFieldBuilder::Base
   def label_text   name, options={} ; field_label normalized_name(name, options), options                ; end
 
   def build_form_field name, options={ }
-    self.filtering name, options do
-      name_for_key = normalized_name name, options
+    name_for_key = normalized_name name, options
+    self.filtering name_for_key, options do
       options[:placeholder] = texts.placeholder(target_class_name, name_for_key, options) if (options[:placeholder] == true)
       options[:name_for_key] = name_for_key
       form_field name_for_key, yield(field_name_for(name, options), value_for_field(name, options)), "#{css_class_prefix}-#{name} #{options[:css_class]}".strip, options
