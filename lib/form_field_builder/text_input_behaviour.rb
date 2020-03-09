@@ -15,7 +15,7 @@ module FormFieldBuilder::TextInputBehaviour
   def money_input name, options={ }
     build_form_field name, options do |field_name, value|
       v = value.is_a?(Numeric) ? number_to_currency(value) : value
-      "<input class='numeric money' type='text' name='#{field_name}' value='#{v}'#{disabled options}/>"
+      "<input class='numeric money' type='text' name='#{field_name}' value='#{v}'#{placeholder options}#{disabled options}/>"
     end
   end
 

@@ -6,21 +6,28 @@ RSpec::describe FormFieldBuilder::Decorated do
   describe "some examples in french" do
     before { I18n.locale = :fr }
 
-    it "should create a money input field with a value" do
+    it "creates a money input field with a value" do
       ffb = form_field_builder Person.new(height: 12.34)
       input = "<input class='numeric money' type='text' name='person[height]' value='12,34'/>"
       expected = expectable "person-height", "Hauteur", input
       expect(fix_field ffb.money_input("height")).to eq expected
     end
 
-    it "should create a money input field with a value and a custom label" do
+    it "creates a money input field with a placeholder" do
+      ffb = form_field_builder Person.new(height: 12.34)
+      input = "<input class='numeric money' type='text' name='person[height]' value='12,34' placeholder='expensive'/>"
+      expected = expectable "person-height", "Hauteur", input
+      expect(fix_field ffb.money_input("height", placeholder: "expensive")).to eq expected
+    end
+
+    it "creates a money input field with a value and a custom label" do
       ffb = form_field_builder Person.new(height: 12.34)
       input = "<input class='numeric money' type='text' name='person[height]' value='12,34'/>"
       expected = expectable "person-height", "Le montant que je veux que tu me payes", input
       expect(fix_field ffb.money_input("height", lbl: "Le montant que je veux que tu me payes")).to eq expected
     end
 
-    it "should create a money input field with a value and a translated custom label" do
+    it "creates a money input field with a value and a translated custom label" do
       ffb = form_field_builder Person.new(height: 12.34)
       input = "<input class='numeric money' type='text' name='person[height]' value='12,34'/>"
       expected = expectable "person-height", "Grande ?", input
