@@ -70,7 +70,9 @@ class FormFieldBuilder::Base
   end
 
   def field_name_for name, options
-    if has_many_association? name
+    if options[:field_name]
+      options[:field_name]
+    elsif has_many_association? name
       build_field_name("#{name}_attributes", "[]")
     elsif append__id? name
       build_field_name("#{name}_id", '')

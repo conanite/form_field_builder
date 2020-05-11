@@ -89,5 +89,12 @@ RSpec.describe FormFieldBuilder::Decorated do
       expected = expectable "person-name", "Name", input, nil, "li", " data-foo='unbedingt' onmouseover='jump!'"
       expect(fix_field ffb.text_input(:name, tag_attributes: { :"data-foo" => "unbedingt", onmouseover: "jump!"})).to eq expected
     end
+
+    it "overrides field nane" do
+      ffb = form_field_builder Person.new
+      input = "<input type='text' name='whatever!' value=''/>"
+      expected = expectable "person-name", "Name", input
+      expect(fix_field ffb.text_input(:name, field_name: "whatever!")).to eq expected
+    end
   end
 end

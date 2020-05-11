@@ -1,5 +1,5 @@
 module FormFieldBuilder::RadioFieldBehaviour
-  def generate_id *items                 ; items.map(&:to_s).join("_")                                              ; end
+  def generate_id *items ; items.map(&:to_s).join("_") ; end
 
   def _make_yes_no_any name, yes_sel, no_sel, any_sel, values, options
     "<div class='yes_no_any'>
