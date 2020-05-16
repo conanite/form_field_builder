@@ -17,12 +17,16 @@ class FormFieldBuilder::Base
   attr_accessor :target, :input_name_prefix, :css_class_prefix, :target_class_name, :i18n, :texts
 
   def initialize target=nil, options={ }
-    @target = target
+    @target, @options  = target, options
     @target_class_name = options[:class_name] || underscore_more(target.class.name)
     @input_name_prefix = options[:input_name_prefix] || @target_class_name
     @css_class_prefix  = @input_name_prefix.to_s.gsub(/\[/, "-").gsub(/\]/, '')
     @i18n              = options[:i18n] || I18n
     @texts             = options[:texts] || FormFieldBuilder::I18nTextProvider.new(i18n: i18n)
+  end
+
+  def sub name, prefix, options={}
+    self.class.new value_for_field(name, options), @options.merge(input_name_prefix: field_name_for(prefix, options)).merge(options[:sub] || {})
   end
 
   def locally obj
