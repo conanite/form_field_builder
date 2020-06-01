@@ -132,7 +132,8 @@ class FormFieldBuilder::Base
     end
   end
 
-  def check name, check_value, options={ }
+  def check name, options={ }
+    check_value = options.delete :check_value
     build_form_field name, options do |field_name, value|
       checked = (check_value == value) ? " checked='checked'" : ''
       "<input type='checkbox' name='#{field_name}' value='#{check_value}'#{checked}#{disabled options}/>"

@@ -1,15 +1,17 @@
 require 'active_support/core_ext/array/wrap'
 
 module FormFieldBuilder::SelectFieldBehaviour
-  def select name, choices, options={ }
-    build_form_field(name, options) { |field_name, value| raw_select field_name, value, choices, options }
+  def select name, options={ }
+    _select name, options.delete(:choices), options
   end
 
-  def select_names name, names, options={ }
-    select(name, names.map { |n| [n,n] }, options)
+  def select_names name, options={ }
+    _select(name, options[:names].map { |n| [n,n] }, options)
   end
 
-  def select_as_tags name, choices, columns=3, options={ }
+  def select_as_tags name, options={ }
+    choices = options.delete(:choices)
+    columns = options.delete(:columns) || 3
     build_form_field(name, options) { |field_name, value|
       hidden_input = hidden name, value: value
       buttons = Ui::TagSelectBuilder.new.build field_name, choices, columns
@@ -17,18 +19,27 @@ module FormFieldBuilder::SelectFieldBehaviour
     }
   end
 
-  def multi_check name, choices, opts={}
-    build_form_field(name, opts.merge(array_field: true)) { |fname, val| build_checks fname, val, choices, opts }
-  end
-
-  def multi_check_i18n   name, key, opts={} ; multi_check name, select_options_from_i18n(key, opts), opts            ; end
-  def please_select  name, choices, opts={} ; select name, prepend_please(choices), opts                             ; end
-  def i18n_select        name, key, opts={} ; select name, select_options_from_i18n(key, opts), opts                 ; end
-  def please_i18n_select name, key, opts={} ; select name, prepend_please(select_options_from_i18n(key, opts)), opts ; end
-  def please_select_objects name, objs, meth, opts={} ; select name, prepend_please(objs.selectify meth), opts       ; end
-  def select_objects        name, objs, meth, opts={} ; select name, objs.selectify(meth), opts                      ; end
+  def multi_check           name, opts={} ; _multi_check name, opts.delete(:choices), opts                                   ; end
+  def multi_check_i18n      name, opts={} ; _multi_check name, select_options_from_i18n(opts.delete(:key), opts), opts       ; end
+  def please_select         name, opts={} ; _please_select name, opts.delete(:choices), opts                                 ; end
+  def i18n_select           name, opts={} ; _select name, select_options_from_i18n(opts.delete(:key), opts), opts            ; end
+  def please_i18n_select    name, opts={} ; _please_select name, select_options_from_i18n(opts.delete(:key), opts), opts     ; end
+  def please_select_objects name, opts={} ; _please_select name, opts.delete(:objects).selectify(opts.delete(:method)), opts ; end
+  def select_objects        name, opts={} ; _select name, opts.delete(:objects).selectify(opts.delete(:method)), opts        ; end
 
   private
+
+  def _select name, choices, options={ }
+    build_form_field(name, options) { |field_name, value| raw_select field_name, value, choices, options }
+  end
+
+  def _please_select  name, choices, opts={}
+    _select name, prepend_please(choices), opts
+  end
+
+  def _multi_check name, choices, opts={}
+    build_form_field(name, opts.merge(array_field: true)) { |fname, val| build_checks fname, val, choices, opts }
+  end
 
   def prepend_please choices ; ([[nil, i18n.t("select.please")]] + choices) ; end
 
