@@ -149,7 +149,7 @@ RSpec::describe FormFieldBuilder::RadioFieldBehaviour do
 <input id='element[sex]_o_123' type='radio' name='element[sex]' value='o'>
 <label for='element[sex]_o_123'>Other</label></div></div>"
     expected = expectable "element-sex", "sex", input
-    expect(fix_field ffb.radio("sex", choices: [["m","Male"],["f","Female"],["o","Other"]], id: 123)).to eq expected
+    expect(fix_field ffb.radio("sex", [["m","Male"],["f","Female"],["o","Other"]], id: 123)).to eq expected
   end
 
   it "should create a radio input field from a set of objects" do
@@ -171,7 +171,7 @@ RSpec::describe FormFieldBuilder::RadioFieldBehaviour do
 <div class='radio-option'>
 <input id='thing[widget_id]_42_' type='radio' name='thing[widget_id]' value='42' checked='checked'>
 <label for='thing[widget_id]_42_'>hexagonal</label></div></div>"
-    expect(fix_field ffb.object_radio(:widget_id, objects: objects, method: :shape)).to eq input
+    expect(fix_field ffb.object_radio(:widget_id, objects, :shape)).to eq input
   end
 
   it "should create a radio input field with an 'all' option" do
@@ -191,6 +191,6 @@ RSpec::describe FormFieldBuilder::RadioFieldBehaviour do
 <input id='element[sex]_o_123' type='radio' name='element[sex]' value='o'>
 <label for='element[sex]_o_123'>Autre</label></div></div>"
     expected = expectable "element-sex", "sexe", input
-    expect(fix_field ffb.all_radio("sex", choices: [["m","Mâle"],["f","Femelle"],["o","Autre"]], id: 123)).to eq expected
+    expect(fix_field ffb.all_radio("sex", [["m","Mâle"],["f","Femelle"],["o","Autre"]], id: 123)).to eq expected
   end
 end

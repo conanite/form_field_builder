@@ -17,7 +17,7 @@ RSpec.describe FormFieldBuilder::RadioFieldBehaviour do
 <input id='person[type]_green_123' type='radio' name='person[type]' value='green' checked='checked'>
 <label for='person[type]_green_123'>Greenish</label></div></div>"
     expected = expectable "person-type", "Kind", input
-    expect(fix_field ffb.i18n_radio("type", key: "glossary.person.type.options", id: 123)).to eq expected
+    expect(fix_field ffb.i18n_radio("type", "glossary.person.type.options", id: 123)).to eq expected
   end
 
   it "should create a radio input field with choices, including label and description, from i18n" do
@@ -33,7 +33,7 @@ RSpec.describe FormFieldBuilder::RadioFieldBehaviour do
 <label for='group[purpose]_fighting_'>Fighting</label>
 <span class='description'> - or bickering or squabbling</span></div></div>"
     expected = expectable "group-purpose", "Whatfor?", input
-    expect(fix_field ffb.i18n_radio("purpose", key: "glossary.group.purpose.options")).to eq expected
+    expect(fix_field ffb.i18n_radio("purpose", "glossary.group.purpose.options")).to eq expected
   end
 
   it "should create a select input field with choices from i18n and an 'all' option" do
@@ -53,6 +53,6 @@ RSpec.describe FormFieldBuilder::RadioFieldBehaviour do
 <input id='person[type]_green_123' type='radio' name='person[type]' value='green' checked='checked'>
 <label for='person[type]_green_123'>Greenish</label></div></div>"
     expected = expectable "person-type", "Kind", input
-    expect(fix_field ffb.all_i18n_radio("type", key: "glossary.person.type.options", id: 123)).to eq expected
+    expect(fix_field ffb.all_i18n_radio("type", "glossary.person.type.options", id: 123)).to eq expected
   end
 end

@@ -46,33 +46,29 @@ module FormFieldBuilder::RadioFieldBehaviour
   end
 
   def boolean name, options={ }
-    _radio name, [[true, i18n.t("ffb.yes")],[false, i18n.t("ffb.no")]], options
+    radio name, [[true, i18n.t("ffb.yes")],[false, i18n.t("ffb.no")]], options
   end
 
-  def _radio name, choices, options={ }
+  def radio name, choices, options={ }
     build_form_field(name, options) { |field_name, value|
       raw_radio field_name, parameterise(value), choices, options
     }
   end
 
-  def radio name, options={ }
-    _radio name, options.delete(:choices), options
+  def all_radio name, choices, options={ }
+    radio name, prepend_all(choices), options
   end
 
-  def all_radio name, options={ }
-    _radio name, prepend_all(options.delete(:choices)), options
+  def i18n_radio name, key, options={ }
+    radio name, select_options_from_i18n(key, options), options
   end
 
-  def i18n_radio name, options={ }
-    _radio name, select_options_from_i18n(options.delete(:key), options), options
+  def object_radio name, objects, presentation_method, options={ }
+    radio name, selectify(objects, presentation_method), options
   end
 
-  def object_radio name, options={ }
-    _radio name, selectify(options.delete(:objects), options.delete(:method)), options
-  end
-
-  def all_i18n_radio name, options={ }
-    _radio name, prepend_all(select_options_from_i18n(options.delete(:key), options)), options
+  def all_i18n_radio name, key, options={ }
+    radio name, prepend_all(select_options_from_i18n(key, options)), options
   end
 
   private

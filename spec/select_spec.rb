@@ -11,7 +11,7 @@ RSpec.describe FormFieldBuilder::Decorated do
 <option value='p' selected='selected'>Paris</option>
 <option value='m'>Madrid</option></select>"
     expected = expectable "c-city", "City", input
-    expect(fix_field ffb.select("city", choices: [["d","Dublin"],["p","Paris"],["m","Madrid"]])).to eq expected
+    expect(fix_field ffb.select("city", [["d","Dublin"],["p","Paris"],["m","Madrid"]])).to eq expected
   end
 
   it "should create a select input field with a 'please select' option" do
@@ -24,7 +24,7 @@ RSpec.describe FormFieldBuilder::Decorated do
 <option value='p' selected='selected'>Paris</option>
 <option value='m'>Madrid</option></select>"
     expected = expectable "c-city", "Ville", input
-    expect(fix_field ffb.please_select("city", choices: [["d","Dublin"],["p","Paris"],["m","Madrid"]])).to eq expected
+    expect(fix_field ffb.please_select("city", [["d","Dublin"],["p","Paris"],["m","Madrid"]])).to eq expected
   end
 
   it "should create a select input field with choices from i18n" do
@@ -35,7 +35,7 @@ RSpec.describe FormFieldBuilder::Decorated do
 <option value='red'>Reddish</option>
 <option value='green' selected='selected'>Greenish</option></select>"
     expected = expectable "person-type", "Kind", input
-    expect(fix_field ffb.i18n_select("type", key: "glossary.person.type.options")).to eq expected
+    expect(fix_field ffb.i18n_select("type", "glossary.person.type.options")).to eq expected
   end
 
   it "should create a list of check inputs with choices from i18n" do
@@ -52,7 +52,7 @@ RSpec.describe FormFieldBuilder::Decorated do
 <input type='checkbox' name='person[type][]' value='green' checked='checked'/>
 <label>Greenish</label></div></div>"
     expected = expectable "person-type", "Kind", input
-    expect(fix_field ffb.multi_check_i18n("type", key: "glossary.person.type.options")).to eq expected
+    expect(fix_field ffb.multi_check_i18n("type", "glossary.person.type.options")).to eq expected
   end
 
   it "should create a select input field with choices from i18n and a 'please select' option" do
@@ -64,7 +64,7 @@ RSpec.describe FormFieldBuilder::Decorated do
 <option value='red'>Reddish</option>
 <option value='green' selected='selected'>Greenish</option></select>"
     expected = expectable "person-type", "Kind", input
-    expect(fix_field ffb.please_i18n_select("type", key: "glossary.person.type.options")).to eq expected
+    expect(fix_field ffb.please_i18n_select("type", "glossary.person.type.options")).to eq expected
   end
 
   it "should create a select input field with choices from objects and no 'please select' option" do
@@ -78,7 +78,7 @@ RSpec.describe FormFieldBuilder::Decorated do
 <option value='517'>YEATS</option>
 <option value='518' selected='selected'>SHAW</option></select>"
     expected = expectable "group_person-person_id", "Who", input
-    expect(fix_field ffb.select_objects("person_id", objects: [o1, o2, o3], method: :name)).to eq expected
+    expect(fix_field ffb.select_objects("person_id", [o1, o2, o3], :name)).to eq expected
   end
 
   it "should create a select input field with choices from objects and a 'please select' option" do
@@ -93,7 +93,7 @@ RSpec.describe FormFieldBuilder::Decorated do
 <option value='517'>YEATS</option>
 <option value='518' selected='selected'>SHAW</option></select>"
     expected = expectable "group_person-person_id", "Who", input
-    expect(fix_field ffb.please_select_objects("person_id", objects: [o1, o2, o3], method: :name)).to eq expected
+    expect(fix_field ffb.please_select_objects("person_id", [o1, o2, o3], :name)).to eq expected
   end
 
   it "should create a select input field with no value, chomping '_id' off name for i18n" do
@@ -106,7 +106,7 @@ RSpec.describe FormFieldBuilder::Decorated do
     expected = expectable "group_person-person_id", "Qui", input
 
     people = [[1,"first"],[2,"second"],[3,"third"]]
-    expect(fix_field ffb.select("person_id", choices: people)).to eq expected
+    expect(fix_field ffb.select("person_id", people)).to eq expected
   end
 
   it "should create a select input field using #to_param to determine field value, appending _id to field name" do
@@ -121,6 +121,6 @@ RSpec.describe FormFieldBuilder::Decorated do
     expected = expectable "group_person-person", "Qui", input
 
     people = [[1,"first"],[110, "The Very Best"],[2,"second"],[3,"third"]]
-    expect(fix_field ffb.select("person", choices: people)).to eq expected
+    expect(fix_field ffb.select("person", people)).to eq expected
   end
 end
