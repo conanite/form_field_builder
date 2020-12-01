@@ -49,7 +49,7 @@ module FormFieldBuilder::TextInputBehaviour
   def text_input name, options={ }
     build_form_field name, options do |field_name, value|
       cls = input_class nil, options
-      css_kla = cls == '' ? '' : "class='#{cls}'"
+      css_kla = cls == '' ? '' : "class='#{cls}' "
       "<input #{css_kla}type='text' name='#{field_name}' value='#{h value}'#{placeholder options}#{disabled options}/>"
     end
   end
