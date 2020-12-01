@@ -58,6 +58,13 @@ module FormFieldBuilder::SelectFieldBehaviour
     "<div class='radio_container'>#{check_html}#{label_html}</div>"
   end
 
-  def slice_select_options       opts, incs ; incs.blank? ? opts : opts.slice(*incs)                   ; end
-  def select_options_from_i18n key, opts={} ; slice_select_options(i18n.t(*key), opts[:includes]).to_a ; end
+  def slice_select_options opts, incs, exes
+    opts = opts.slice(*incs) if incs.present?
+    opts = opts.except(*exes) if exes.present?
+    opts
+  end
+
+  def select_options_from_i18n key, opts={}
+    slice_select_options(i18n.t(*key), opts[:includes], opts[:excludes]).to_a
+  end
 end
