@@ -26,7 +26,7 @@ class FormFieldBuilder::Base
   end
 
   def sub name, prefix, options={}
-    v       = name ? value_for_field(name, options) : nil
+    v       = (name ? value_for_field(name, options) : nil) || options[:default_value]
     fn      = field_name_for(prefix, options)
     newopts = @options.merge(prefix: fn).merge(options[:sub] || {})
     self.class.new v, newopts
@@ -94,7 +94,7 @@ class FormFieldBuilder::Base
   def append__id?                   name ; belongs_to_association?(name) || behaves_like_belongs_to?(name) ; end
   def parameterise                 value ; value.respond_to?(:to_param) ? value.to_param : value           ; end
   def try_target          alt_name, name ; target && target.send((alt_name || name).to_sym)                ; end
-  def value_for_field      name, options ; options[:value] || try_target(options[:from], name)             ; end
+  def value_for_field      name, options ; options.key?(:value) ? options[:value] : try_target(options[:from], name) ; end
   def build_form_field name, options={ } ; raise "not implemented"                                         ; end
   def wrap_tag       txt, tag, tag_attrs ; "<#{tag}#{as_attributes tag_attrs}>#{txt}</#{tag}>"             ; end
   def wrap_tag?      txt, tag, tag_attrs ; txt.blank? ? "" : wrap_tag(txt, tag, tag_attrs)                 ; end
