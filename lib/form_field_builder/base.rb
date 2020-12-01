@@ -142,6 +142,10 @@ class FormFieldBuilder::Base
     end
   end
 
+  def input_class given, options
+    "#{given} #{options[:input_class]}".strip
+  end
+
   protected
 
   def guess_precision number
