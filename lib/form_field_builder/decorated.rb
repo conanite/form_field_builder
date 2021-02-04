@@ -24,9 +24,9 @@ class FormFieldBuilder::Decorated < FormFieldBuilder::Base
   end
 
   def field_label name_for_key, options
-    return locally(options[:lbl]) if options[:lbl]
-    override_field_label(name_for_key, options) ||
-      options[:label] ||
+    locally(options[:lbl])                        ||
+      override_field_label(name_for_key, options) ||
+      options[:label]                             ||
       texts.label(target_class_name, name_for_key, options)
   end
 
@@ -44,13 +44,19 @@ class FormFieldBuilder::Decorated < FormFieldBuilder::Base
     description ? "<p class='description'>#{description}</p>" : ""
   end
 
+  def build_post_description name_for_key, options={}
+    description =  locally(options[:post_desc]) unless options[:post_desc].blank?
+    description ? "<p class='description'>#{description}</p>" : ""
+  end
+
   def form_field name_for_key, content, css_class, options={ }
-    defaults = { required: false, id: nil }
-    options = defaults.merge(options)
-    error = "<div class='error_container'></div>"
-    label_node = build_label_node  name_for_key, options
-    desc_node  = build_description name_for_key, options
-    "<#{tag} class='input_row #{css_class}'#{as_attributes options[:tag_attributes]}>#{options[:before_label]}#{label_node}#{error}#{desc_node}#{content}</#{tag}>".html_safe
+    defaults        = { required: false, id: nil }
+    options         = defaults.merge(options)
+    error           = "<div class='error_container'></div>"
+    label_node      = build_label_node       name_for_key, options
+    desc_node       = build_description      name_for_key, options
+    post_desc_node  = build_post_description name_for_key, options
+    "<#{tag} class='input_row #{css_class}'#{as_attributes options[:tag_attributes]}>#{options[:before_label]}#{label_node}#{error}#{desc_node}#{content}#{post_desc_node}</#{tag}>".html_safe
   end
 
   def normalized_name name, options ; options[:preserve_id_suffix] ? name : name.to_s.gsub(/_ids?$/, '') ; end

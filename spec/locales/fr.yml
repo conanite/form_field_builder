@@ -30,6 +30,8 @@ fr:
     group:
       group_people:
         label:   Les gens
+      purpose:
+        label:   Destination
     group_person:
       person:
         label:    Qui

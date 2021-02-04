@@ -193,4 +193,24 @@ RSpec::describe FormFieldBuilder::RadioFieldBehaviour do
     expected = expectable "element-sex", "sexe", input
     expect(fix_field ffb.all_radio("sex", [["m","Mâle"],["f","Femelle"],["o","Autre"]], id: 123)).to eq expected
   end
+
+  it "creates a radio input field with choices, label, description, and post-description" do
+    I18n.locale = :fr
+    ffb = form_field_builder Group.new
+    input = "<p class='description'>Merci de nous donner votre accord</p>
+<div class='radio_container'>
+<div class='radio-option'>
+<input id='group[purpose]_y_' type='radio' name='group[purpose]' value='y'>
+<label for='group[purpose]_y_'>nous autorisons</label></div>
+<div class='radio-option'>
+<input id='group[purpose]_n_' type='radio' name='group[purpose]' value='n'>
+<label for='group[purpose]_n_'>nous n&#39;autorisons pas</label></div></div>
+<p class='description'>l'utilisation de notre photo</p>"
+    expected = expectable "group-purpose", "Destination", input
+    opts = [["y", "nous autorisons"],["n", "nous n'autorisons pas"]]
+    desc = { fr: "Merci de nous donner votre accord", en: "Please agree with us"}
+    post = { fr: "l'utilisation de notre photo", en: "the use of our photo"}
+    r = ffb.radio("purpose", opts, desc: desc, post_desc: post)
+    expect(fix_field r).to eq expected
+  end
 end
