@@ -9,9 +9,9 @@ RSpec::describe FormFieldBuilder::RadioFieldBehaviour do
     input = "<div class='yes_no_any'>
 <input type='hidden' name='x[happy]' value='true'/>
 <div class='option_container'>
-<div class='option yes value-true selected'>yes</div>
-<div class='option no  value-false ' >no</div>
-<div class='option any value-nil '>all</div>
+<div tabindex='0' class='option yes value-true selected'>yes</div>
+<div tabindex='0' class='option no  value-false ' >no</div>
+<div tabindex='0' class='option any value-nil '>all</div>
 </div>
 </div>"
     expected = expectable "x-happy", "Happy", input
@@ -24,9 +24,9 @@ RSpec::describe FormFieldBuilder::RadioFieldBehaviour do
     input = "<div class='yes_no_any'>
 <input type='hidden' name='x[happy]' value='true'/>
 <div class='option_container'>
-<div class='option yes value-true selected'>yes</div>
-<div class='option no  value-nil ' >no</div>
-<div class='option any value-false '>all</div>
+<div tabindex='0' class='option yes value-true selected'>yes</div>
+<div tabindex='0' class='option no  value-nil ' >no</div>
+<div tabindex='0' class='option any value-false '>all</div>
 </div>
 </div>"
     expected = expectable "x-happy", "Happy", input
@@ -39,9 +39,9 @@ RSpec::describe FormFieldBuilder::RadioFieldBehaviour do
     input = "<div class='yes_no_any'>
 <input type='hidden' name='x[happy]' value='false'/>
 <div class='option_container'>
-<div class='option yes value-true '>yes</div>
-<div class='option no  value-false selected' >no</div>
-<div class='option any value-nil '>all</div>
+<div tabindex='0' class='option yes value-true '>yes</div>
+<div tabindex='0' class='option no  value-false selected' >no</div>
+<div tabindex='0' class='option any value-nil '>all</div>
 </div>
 </div>"
     expected = expectable "x-happy", "Happy", input
@@ -54,9 +54,9 @@ RSpec::describe FormFieldBuilder::RadioFieldBehaviour do
     input = "<div class='yes_no_any'>
 <input type='hidden' name='x[happy]' value='false'/>
 <div class='option_container'>
-<div class='option yes value-true '>yes</div>
-<div class='option no  value-nil ' >no</div>
-<div class='option any value-false selected'>all</div>
+<div tabindex='0' class='option yes value-true '>yes</div>
+<div tabindex='0' class='option no  value-nil ' >no</div>
+<div tabindex='0' class='option any value-false selected'>all</div>
 </div>
 </div>"
     expected = expectable "x-happy", "Happy", input
@@ -69,9 +69,9 @@ RSpec::describe FormFieldBuilder::RadioFieldBehaviour do
     input = "<div class='yes_no_any'>
 <input type='hidden' name='x[happy]' value=''/>
 <div class='option_container'>
-<div class='option yes value-true '>yes</div>
-<div class='option no  value-false ' >no</div>
-<div class='option any value-nil selected'>all</div>
+<div tabindex='0' class='option yes value-true '>yes</div>
+<div tabindex='0' class='option no  value-false ' >no</div>
+<div tabindex='0' class='option any value-nil selected'>all</div>
 </div>
 </div>"
     expected = expectable "x-happy", "Happy", input
@@ -84,9 +84,9 @@ RSpec::describe FormFieldBuilder::RadioFieldBehaviour do
     input = "<div class='yes_no_any'>
 <input type='hidden' name='x[happy]' value=''/>
 <div class='option_container'>
-<div class='option yes value-true '>yes</div>
-<div class='option no  value-nil selected' >no</div>
-<div class='option any value-false '>all</div>
+<div tabindex='0' class='option yes value-true '>yes</div>
+<div tabindex='0' class='option no  value-nil selected' >no</div>
+<div tabindex='0' class='option any value-false '>all</div>
 </div>
 </div>"
     expected = expectable "x-happy", "Happy", input
@@ -99,8 +99,8 @@ RSpec::describe FormFieldBuilder::RadioFieldBehaviour do
     input = "<div class='yes_no_any'>
 <input type='hidden' name='x[happy]' value='true'/>
 <div class='option_container'>
-<div class='option yes value-true  selected'>yes</div>
-<div class='option no  value-false ' >no</div>
+<div tabindex='0' class='option yes value-true  selected'>yes</div>
+<div tabindex='0' class='option no  value-false ' >no</div>
 </div>
 </div>"
     expected = expectable "x-happy", "Happy", input
@@ -113,8 +113,8 @@ RSpec::describe FormFieldBuilder::RadioFieldBehaviour do
     input = "<div class='yes_no_any'>
 <input type='hidden' name='x[happy]' value=''/>
 <div class='option_container'>
-<div class='option yes value-true  '>yes</div>
-<div class='option no  value-false ' >no</div>
+<div tabindex='0' class='option yes value-true  '>yes</div>
+<div tabindex='0' class='option no  value-false ' >no</div>
 </div>
 </div>"
     expected = expectable "x-happy", "Happy", input

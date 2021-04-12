@@ -5,9 +5,9 @@ module FormFieldBuilder::RadioFieldBehaviour
     "<div class='yes_no_any'>
        #{hidden name, options}
        <div class='option_container'>
-         <div class='option yes value-#{values[0]} #{yes_sel}'>#{i18n.t "ffb.yes"}</div>
-         <div class='option no  value-#{values[1]} #{no_sel}' >#{i18n.t "ffb.no" }</div>
-         <div class='option any value-#{values[2]} #{any_sel}'>#{i18n.t "ffb.all"}</div>
+         <div tabindex='0' class='option yes value-#{values[0]} #{yes_sel}'>#{i18n.t "ffb.yes"}</div>
+         <div tabindex='0' class='option no  value-#{values[1]} #{no_sel}' >#{i18n.t "ffb.no" }</div>
+         <div tabindex='0' class='option any value-#{values[2]} #{any_sel}'>#{i18n.t "ffb.all"}</div>
        </div>
      </div>".html_safe
   end
@@ -38,8 +38,8 @@ module FormFieldBuilder::RadioFieldBehaviour
       "<div class='yes_no_any'>
          #{ hidden name, options }
          <div class='option_container'>
-           <div class='option yes value-true  #{yes_selected}'>#{i18n.t "ffb.yes"}</div>
-           <div class='option no  value-false #{no_selected}' >#{i18n.t "ffb.no" }</div>
+           <div tabindex='0' class='option yes value-true  #{yes_selected}'>#{i18n.t "ffb.yes"}</div>
+           <div tabindex='0' class='option no  value-false #{no_selected}' >#{i18n.t "ffb.no" }</div>
          </div>
        </div>".html_safe
     }
