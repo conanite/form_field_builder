@@ -14,7 +14,13 @@ class FormFieldBuilder::Base
   include FormFieldBuilder::RadioFieldBehaviour
   include FormFieldBuilder::SelectFieldBehaviour
 
-  attr_accessor :target, :input_name_prefix, :css_class_prefix, :target_class_name, :i18n, :texts
+  @@text_providers = { }
+
+  def self.register_text_provider name, provider
+    @@text_providers[name] = provider
+  end
+
+  attr_accessor :target, :input_name_prefix, :css_class_prefix, :target_class_name, :i18n, :texts, :text_providers
 
   def initialize target=nil, options={ }
     @target, @options  = target, options
@@ -24,6 +30,8 @@ class FormFieldBuilder::Base
     @i18n              = options[:i18n] || I18n
     @texts             = options[:texts] || FormFieldBuilder::I18nTextProvider.new(i18n: i18n)
   end
+
+  def texts_for opts ; opts[:texts] ? @@text_providers[opts[:texts].to_sym] : texts  ; end
 
   def sub name, prefix, options={}
     v       = (name ? value_for_field(name, options) : nil) || options[:default_value]

@@ -24,10 +24,10 @@ class FormFieldBuilder::Decorated < FormFieldBuilder::Base
   end
 
   def field_label name_for_key, options
-    locally(options[:lbl])                        ||
-      override_field_label(name_for_key, options) ||
-      options[:label]                             ||
-      texts.label(target_class_name, name_for_key, options)
+    locally(options[:lbl])                         ||
+      override_field_label(name_for_key, options)  ||
+      options[:label]                              ||
+      texts_for(options).label(target_class_name, name_for_key, options)
   end
 
   def build_label_node name_for_key, options
@@ -39,8 +39,8 @@ class FormFieldBuilder::Decorated < FormFieldBuilder::Base
   end
 
   def build_description name_for_key, options={}
-    description = texts.description(target_class_name, name_for_key, options) if options[:description]
-    description =  locally(options[:desc])                                    unless options[:desc].blank?
+    description   = locally(options[:desc]) if options[:desc]
+    description ||= texts_for(options).description(target_class_name, name_for_key, options) if options[:description]
     description ? "<p class='description'>#{description}</p>" : ""
   end
 
@@ -65,7 +65,7 @@ class FormFieldBuilder::Decorated < FormFieldBuilder::Base
   def build_form_field name, options={ }
     name_for_key = normalized_name name, options
     self.filtering name_for_key, options do
-      options[:placeholder] = texts.placeholder(target_class_name, name_for_key, options) if (options[:placeholder] == true)
+      options[:placeholder] = texts_for(options).placeholder(target_class_name, name_for_key, options) if (options[:placeholder] == true)
       options[:name_for_key] = name_for_key
       form_field name_for_key, yield(field_name_for(name, options), value_for_field(name, options)), "#{css_class_prefix}-#{name} #{options[:css_class]}".strip, options
     end

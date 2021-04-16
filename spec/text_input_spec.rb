@@ -6,6 +6,21 @@ RSpec.describe FormFieldBuilder::Decorated do
   describe "some examples in english" do
     before { I18n.locale = :en }
 
+    it "takes texts from a given #texts option" do
+      ffb = form_field_builder Person.new
+      expected = <<EXPECTED
+<li class='input_row person-name'>
+<label class='input-label'>
+<span class='label-txt'>the label of the name of the person</span></label>
+<div class='error_container'></div>
+<p class='description'>the description of the name of the person</p>
+<input type='text' name='person[name]' value='' placeholder='the placeholder of the name of the person'/></li>
+EXPECTED
+      actual = fix_field ffb.text_input(:name, texts: :fake, description: true, placeholder: true)
+
+      expect(actual).to eq expected.strip
+    end
+
     it "should create a text input field with no value" do
       ffb = form_field_builder Person.new
       input = "<input type='text' name='person[name]' value=''/>"

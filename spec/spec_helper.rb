@@ -6,6 +6,22 @@ module FormFieldBuilderHelpers
     str.gsub(/^\ +/, "").gsub(/\ +$/, "").gsub(/ *\n\ */, "\n")
   end
 
+  class FakeTexts
+    def self.label target_class_name, attr_name, options
+      "the label of the #{attr_name} of the #{target_class_name}"
+    end
+
+    def self.placeholder target_class_name, attr_name, options
+      "the placeholder of the #{attr_name} of the #{target_class_name}"
+    end
+
+    def self.description target_class_name, attr_name, options
+      "the description of the #{attr_name} of the #{target_class_name}"
+    end
+  end
+
+  FormFieldBuilder::Base.register_text_provider :fake, FakeTexts
+
   def glossary_texts
     FormFieldBuilder::I18nTextProvider.new(i18n: I18n, prefix: "glossary")
   end
