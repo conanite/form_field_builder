@@ -33,6 +33,11 @@ module FormFieldBuilder::FieldFilter
     def show?(*args)  ; proc.call(name, *args)   ; end
   end
 
+  class FilterByMethod < Struct.new(:meth, :name)
+    def to_s         ; "method ##{meth} => #{name.inspect}" ; end
+    def show?(thing) ; thing.send(meth, name)   ; end
+  end
+
   # useful for subclasses with differing configs to share a single #form view
   # example (avoid showing #blackmail and #extortion fields in an innocent subclass)
   #
@@ -50,5 +55,9 @@ module FormFieldBuilder::FieldFilter
 
   def proc_filter opts
     opts.each_with_object({}) { |(field, proc), hsh| hsh[field.to_sym] = FilterByProc.new(field, proc) }
+  end
+
+  def method_filter opts
+    opts.each_with_object({}) { |(field, meth), hsh| hsh[field.to_sym] = FilterByMethod.new(meth, field) }
   end
 end
