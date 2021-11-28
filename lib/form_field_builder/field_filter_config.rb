@@ -8,6 +8,10 @@ class FormFieldBuilder::FieldFilterConfig
   def attr_to_s a, ff ; "#{a.to_s.ljust(20)}\n#{ff.map(&:to_s).join("\n") }"                   ; end
   def to_s            ; config.map { |attr, filters| attr_to_s attr, filters }.sort.join("\n") ; end
   def dup             ; self.class.new.tap { |d| config.each { |k,v| d.config[k] = v.dup } }   ; end
+  def restrict list
+    allowed = Array.wrap(list).map(&:to_sym)
+    dup.tap { |d| d.config.each { |k,v| v << FilterByNever.new(k) unless allowed.include?(k) }}
+  end
 
   def replace new_cfg
     new_cfg.each { |attr, filter|
