@@ -10,7 +10,11 @@ class FormFieldBuilder::FieldFilterConfig
   def dup             ; self.class.new.tap { |d| config.each { |k,v| d.config[k] = v.dup } }   ; end
   def restrict list
     allowed = Array.wrap(list).map(&:to_sym)
-    dup.tap { |d| d.config.each { |k,v| v << FilterByNever.new(k) unless allowed.include?(k) }}
+    dup.tap do |d|
+      d.config.each do |k,v|
+        v << FormFieldBuilder::FieldFilter::FilterByNever.new(k) unless allowed.include?(k)
+      end
+    end
   end
 
   def replace new_cfg
