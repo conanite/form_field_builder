@@ -43,14 +43,14 @@ RSpec.describe FormFieldBuilder::Decorated do
     ffb = form_field_builder Person.new(type: "green")
     input = "<div class='person-type- '>
 <div class='radio_container'>
-<input type='checkbox' name='person[type][]' value='blue'/>
-<label>Bluish</label></div>
+<input id='persontype-2' type='checkbox' name='person[type][]' value='blue'/>
+<label for='persontype-2'>Bluish</label></div>
 <div class='radio_container'>
-<input type='checkbox' name='person[type][]' value='red'/>
-<label>Reddish</label></div>
+<input id='persontype-3' type='checkbox' name='person[type][]' value='red'/>
+<label for='persontype-3'>Reddish</label></div>
 <div class='radio_container'>
-<input type='checkbox' name='person[type][]' value='green' checked='checked'/>
-<label>Greenish</label></div></div>"
+<input id='persontype-4' type='checkbox' name='person[type][]' value='green' checked='checked'/>
+<label for='persontype-4'>Greenish</label></div></div>"
     expected = expectable "person-type", "Kind", input
     expect(fix_field ffb.multi_check_i18n("type", "glossary.person.type.options")).to eq expected
   end
