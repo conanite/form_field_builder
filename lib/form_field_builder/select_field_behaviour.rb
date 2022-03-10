@@ -1,9 +1,6 @@
 require 'active_support/core_ext/array/wrap'
 
 module FormFieldBuilder::SelectFieldBehaviour
-  @@_uniq_input_id = 1
-  def self.uniq_input_id n=nil ; @@_uniq_input_id = n ? n : ((@@_uniq_input_id + 1) % 10000000) ; end
-
   def select name, choices, options={ }
     build_form_field(name, options) { |field_name, value| raw_select field_name, value, choices, options }
   end
@@ -55,7 +52,7 @@ module FormFieldBuilder::SelectFieldBehaviour
   end
 
   def check_option field_name, option, values
-    uniq_id  = "#{field_name.gsub(/[^[:alnum:]]/, '')}-#{FormFieldBuilder::SelectFieldBehaviour.uniq_input_id}"
+    uniq_id  = "#{field_name.gsub(/[^[:alnum:]]/, '')}-#{@uniq.val}"
     selected = values.include?(option[0].to_s) ? " checked='checked'" : ""
     check_html = "<input id='#{uniq_id}' type='checkbox' name='#{field_name}' value='#{option[0]}'#{selected}/>"
     label_html = "<label for='#{uniq_id}'>#{option[1]}</label>"

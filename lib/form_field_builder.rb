@@ -1,5 +1,6 @@
 require "active_support"
 require "form_field_builder/version"
+require "form_field_builder/uniq_id"
 require "form_field_builder/core_ext"
 require "form_field_builder/text_input_behaviour"
 require "form_field_builder/radio_field_behaviour"

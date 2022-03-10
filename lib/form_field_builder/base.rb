@@ -24,6 +24,7 @@ class FormFieldBuilder::Base
 
   def initialize target=nil, options={ }
     @target, @options  = target, options
+    @uniq              = options[:uniq] || FormFieldBuilder::UniqId.new
     @target_class_name = options[:class_name] || underscore_more(target.class.name)
     @input_name_prefix = options[:prefix] || options[:input_name_prefix] || @target_class_name
     @css_class_prefix  = @input_name_prefix.to_s.gsub(/\[/, "-").gsub(/\]/, '')
