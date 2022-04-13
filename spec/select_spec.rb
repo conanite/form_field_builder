@@ -33,7 +33,8 @@ RSpec.describe FormFieldBuilder::Decorated do
     input = "<select name='person[type]'>
 <option value='blue'>Bluish</option>
 <option value='red'>Reddish</option>
-<option value='green' selected='selected'>Greenish</option></select>"
+<option value='green' selected='selected'>Greenish</option>
+<option value='other'>Don&#39;t use this</option></select>"
     expected = expectable "person-type", "Kind", input
     expect(fix_field ffb.i18n_select("type", "glossary.person.type.options")).to eq expected
   end
@@ -50,7 +51,10 @@ RSpec.describe FormFieldBuilder::Decorated do
 <label for='persontype-2'>Reddish</label></div>
 <div class='radio_container'>
 <input id='persontype-3' type='checkbox' name='person[type][]' value='green' checked='checked'/>
-<label for='persontype-3'>Greenish</label></div></div>"
+<label for='persontype-3'>Greenish</label></div>
+<div class='radio_container'>
+<input id='persontype-4' type='checkbox' name='person[type][]' value='other'/>
+<label for='persontype-4'>Don't use this</label></div></div>"
     expected = expectable "person-type", "Kind", input
     expect(fix_field ffb.multi_check_i18n("type", "glossary.person.type.options")).to eq expected
   end
@@ -62,7 +66,8 @@ RSpec.describe FormFieldBuilder::Decorated do
 <option value=''>Please select...</option>
 <option value='blue'>Bluish</option>
 <option value='red'>Reddish</option>
-<option value='green' selected='selected'>Greenish</option></select>"
+<option value='green' selected='selected'>Greenish</option>
+<option value='other'>Don&#39;t use this</option></select>"
     expected = expectable "person-type", "Kind", input
     expect(fix_field ffb.please_i18n_select("type", "glossary.person.type.options")).to eq expected
   end

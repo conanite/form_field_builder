@@ -63,5 +63,6 @@ en:
           blue:      Bluish
           red:       Reddish
           green:     Greenish
+          other:     "Don't use this"
   select:
     please:          Please select...

@@ -42,7 +42,7 @@ module FormFieldBuilder::SelectFieldBehaviour
 
   def select_option option, value
     selected = ("#{value}".eql?("#{option[0]}")) ? " selected='selected'" : ""
-    "<option value='#{option[0]}'#{selected}>#{option[1]}</option>".html_safe
+    "<option value='#{h option[0]}'#{selected}>#{h option[1]}</option>".html_safe
   end
 
   def build_checks field_name, values, choices, options
@@ -54,7 +54,7 @@ module FormFieldBuilder::SelectFieldBehaviour
   def check_option field_name, option, values
     uniq_id  = "#{field_name.gsub(/[^[:alnum:]]/, '')}-#{@uniq.val}"
     selected = values.include?(option[0].to_s) ? " checked='checked'" : ""
-    check_html = "<input id='#{uniq_id}' type='checkbox' name='#{field_name}' value='#{option[0]}'#{selected}/>"
+    check_html = "<input id='#{uniq_id}' type='checkbox' name='#{field_name}' value='#{h option[0]}'#{selected}/>"
     label_html = "<label for='#{uniq_id}'>#{option[1]}</label>"
     "<div class='radio_container'>#{check_html}#{label_html}</div>"
   end

@@ -15,7 +15,10 @@ RSpec.describe FormFieldBuilder::RadioFieldBehaviour do
 <label for='person[type]_red_123'>Reddish</label></div>
 <div class='radio-option'>
 <input id='person[type]_green_123' type='radio' name='person[type]' value='green' checked='checked'>
-<label for='person[type]_green_123'>Greenish</label></div></div>"
+<label for='person[type]_green_123'>Greenish</label></div>
+<div class='radio-option'>
+<input id='person[type]_other_123' type='radio' name='person[type]' value='other'>
+<label for='person[type]_other_123'>Don&#39;t use this</label></div></div>"
     expected = expectable "person-type", "Kind", input
     expect(fix_field ffb.i18n_radio("type", "glossary.person.type.options", id: 123)).to eq expected
   end
@@ -51,7 +54,10 @@ RSpec.describe FormFieldBuilder::RadioFieldBehaviour do
 <label for='person[type]_red_123'>Reddish</label></div>
 <div class='radio-option'>
 <input id='person[type]_green_123' type='radio' name='person[type]' value='green' checked='checked'>
-<label for='person[type]_green_123'>Greenish</label></div></div>"
+<label for='person[type]_green_123'>Greenish</label></div>
+<div class='radio-option'>
+<input id='person[type]_other_123' type='radio' name='person[type]' value='other'>
+<label for='person[type]_other_123'>Don&#39;t use this</label></div></div>"
     expected = expectable "person-type", "Kind", input
     expect(fix_field ffb.all_i18n_radio("type", "glossary.person.type.options", id: 123)).to eq expected
   end

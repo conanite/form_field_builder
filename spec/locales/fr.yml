@@ -59,6 +59,6 @@ fr:
         options:
           blue:      Un peu bleu
           red:       Un peu rouge
-          green:     Un peu vert
+          green:     "Un p'tit peu vert"
   select:
     please:          Choisir...
