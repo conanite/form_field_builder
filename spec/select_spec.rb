@@ -42,7 +42,7 @@ RSpec.describe FormFieldBuilder::Decorated do
   it "should create a list of check inputs with choices from i18n" do
     I18n.locale = :en
     ffb = form_field_builder Person.new(type: "green")
-    input = "<div class='person-type- '>
+    input = "<div class='check-all-scope person-type- '>
 <div class='radio_container'>
 <input id='persontype-1' type='checkbox' name='person[type][]' value='blue'/>
 <label for='persontype-1'>Bluish</label></div>
@@ -57,6 +57,28 @@ RSpec.describe FormFieldBuilder::Decorated do
 <label for='persontype-4'>Don't use this</label></div></div>"
     expected = expectable "person-type", "Kind", input
     expect(fix_field ffb.multi_check_i18n("type", "glossary.person.type.options")).to eq expected
+  end
+
+  it "should create a list of check inputs with choices from i18n and custom check all/none links" do
+    I18n.locale = :en
+    ffb = form_field_builder Person.new(type: "green")
+    input = "<div class='check-all-scope person-type- '>
+<span>check :all: :none:</span>
+<div class='radio_container'>
+<input id='persontype-1' type='checkbox' name='person[type][]' value='blue'/>
+<label for='persontype-1'>Bluish</label></div>
+<div class='radio_container'>
+<input id='persontype-2' type='checkbox' name='person[type][]' value='red'/>
+<label for='persontype-2'>Reddish</label></div>
+<div class='radio_container'>
+<input id='persontype-3' type='checkbox' name='person[type][]' value='green' checked='checked'/>
+<label for='persontype-3'>Greenish</label></div>
+<div class='radio_container'>
+<input id='persontype-4' type='checkbox' name='person[type][]' value='other'/>
+<label for='persontype-4'>Don't use this</label></div></div>"
+    expected = expectable "person-type", "Kind", input
+    allnone = "<span>check :all: :none:</span>"
+    expect(fix_field ffb.multi_check_i18n("type", "glossary.person.type.options", check_all: allnone)).to eq expected
   end
 
   it "should create a select input field with choices from i18n and a 'please select' option" do

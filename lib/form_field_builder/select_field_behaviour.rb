@@ -48,7 +48,7 @@ module FormFieldBuilder::SelectFieldBehaviour
   def build_checks field_name, values, choices, options
     values       = Array.wrap(values).map { |v| parameterise v }.map &:to_s
     choices_html = choices.map { |o| check_option field_name, o, values }.join
-    "<div class='#{field_name.gsub(/\W/, '-').gsub(/-+/, '-')} #{options[:class]}'>#{choices_html}</div>".html_safe
+    "<div class='check-all-scope #{field_name.gsub(/\W/, '-').gsub(/-+/, '-')} #{options[:class]}'>#{options[:check_all]}#{choices_html}</div>".html_safe
   end
 
   def check_option field_name, option, values
