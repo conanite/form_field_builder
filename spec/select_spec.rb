@@ -16,7 +16,7 @@ RSpec.describe FormFieldBuilder::Decorated do
 
   it "should create a select input field with a 'please select' option" do
     I18n.locale = :fr
-    ffb = form_field_builder Person.new(unit: "b"), input_name_prefix: "element"
+    # ffb = form_field_builder Person.new(unit: "b"), input_name_prefix: "element"
     ffb = form_field_builder Person.new(city: "p"), input_name_prefix: "c"
     input = "<select name='c[city]'>
 <option value=''>Choisir...</option>
@@ -25,6 +25,18 @@ RSpec.describe FormFieldBuilder::Decorated do
 <option value='m'>Madrid</option></select>"
     expected = expectable "c-city", "Ville", input
     expect(fix_field ffb.please_select("city", [["d","Dublin"],["p","Paris"],["m","Madrid"]])).to eq expected
+  end
+
+  it "creates a select input field with a 'please select' option from a hash" do
+    I18n.locale = :fr
+    ffb = form_field_builder({ city: "d" }, input_name_prefix: "c")
+    input = "<select name='c[city]'>
+<option value=''>Choisir...</option>
+<option value='d' selected='selected'>Dublin</option>
+<option value='p'>Paris</option>
+<option value='m'>Madrid</option></select>"
+    expected = expectable "c-city", "Ort", input
+    expect(fix_field ffb.please_select("city", [["d","Dublin"],["p","Paris"],["m","Madrid"]], label: "Ort")).to eq expected
   end
 
   it "should create a select input field with choices from i18n" do

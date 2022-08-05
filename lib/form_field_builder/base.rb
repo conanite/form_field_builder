@@ -14,6 +14,18 @@ class FormFieldBuilder::Base
   include FormFieldBuilder::RadioFieldBehaviour
   include FormFieldBuilder::SelectFieldBehaviour
 
+  class NilAccessor
+    def self.get _ ; end
+  end
+
+  class PoroAccessor < Struct.new(:target)
+    def get name ; target.send(name) ; end
+  end
+
+  class HashAccessor < Struct.new(:target)
+    def get name ; target[name] ; end
+  end
+
   @@text_providers = { }
 
   def self.register_text_provider name, provider
@@ -24,6 +36,14 @@ class FormFieldBuilder::Base
 
   def initialize target=nil, options={ }
     @target, @options  = target, options
+    @target_accessor =  if target.is_a?(Hash)
+                          HashAccessor.new(target)
+                        elsif target
+                          PoroAccessor.new(target)
+                        else
+                          NilAccessor
+                        end
+
     @uniq              = options[:uniq] || FormFieldBuilder::UniqId.new
     @target_class_name = options[:class_name] || underscore_more(target.class.name)
     @input_name_prefix = options[:prefix] || options[:input_name_prefix] || @target_class_name
@@ -102,11 +122,12 @@ class FormFieldBuilder::Base
   def underscore_more                str ; str.gsub(/([[:alpha:]])([[:upper:]])/, '\1_\2').downcase.gsub(/\/|::/, "_") ; end
   def append__id?                   name ; belongs_to_association?(name) || behaves_like_belongs_to?(name) ; end
   def parameterise                 value ; value.respond_to?(:to_param) ? value.to_param : value           ; end
-  def try_target          alt_name, name ; target && target.send((alt_name || name).to_sym)                ; end
+  def try_target          alt_name, name ; @target_accessor.get((alt_name || name).to_sym)                 ; end
   def value_for_field      name, options ; options.key?(:value) ? options[:value] : try_target(options[:from], name) ; end
   def build_form_field name, options={ } ; raise "not implemented"                                         ; end
   def wrap_tag       txt, tag, tag_attrs ; "<#{tag}#{as_attributes tag_attrs}>#{txt}</#{tag}>"             ; end
   def wrap_tag?      txt, tag, tag_attrs ; txt.blank? ? "" : wrap_tag(txt, tag, tag_attrs)                 ; end
+  def custom       name, options={ }, &b ; build_form_field name, options, &b                              ; end
 
   def as_attributes options={}
     result=""
@@ -118,11 +139,6 @@ class FormFieldBuilder::Base
     "<input type='hidden' name='#{field_name_for name, options}' value='#{h parameterise value_for_field name, options}#{disabled options}'/>".html_safe
   end
 
-  def custom name, options={ }
-    build_form_field name, options do |field_name, value|
-      yield field_name, value
-    end
-  end
 
   def text_area name, options={ }
     build_form_field name, options do |field_name, value|

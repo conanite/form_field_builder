@@ -36,6 +36,15 @@ RSpec::describe FormFieldBuilder::Decorated do
       expect(fix_field ffb.text_input(:name, no_label: true)).to eq expected
     end
 
+    it "creates a text input field from a hash" do
+      ffb = form_field_builder({ name: "Bosco" }, class_name: "person")
+      expected = "<li class='input_row person-name'>
+<div class='error_container'></div>
+<input type='text' name='person[name]' value='Bosco'/></li>"
+
+      expect(fix_field ffb.text_input(:name, no_label: true)).to eq expected
+    end
+
     it "uses an alternative subkey to translate label" do
       ffb = form_field_builder Person.new
       expected = "<li class='input_row person-name'>
