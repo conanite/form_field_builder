@@ -32,17 +32,23 @@ class FormFieldBuilder::Base
     @@text_providers[name] = provider
   end
 
-  attr_accessor :target, :input_name_prefix, :css_class_prefix, :target_class_name, :i18n, :texts, :text_providers
+  attr_reader :target
+  attr_accessor :input_name_prefix, :css_class_prefix, :target_class_name, :i18n, :texts, :text_providers
 
-  def initialize target=nil, options={ }
-    @target, @options  = target, options
-    @target_accessor =  if target.is_a?(Hash)
+  def target= tgt
+    @target  = tgt
+    @target_accessor =  if tgt.is_a?(Hash)
                           HashAccessor.new(target)
                         elsif target
                           PoroAccessor.new(target)
                         else
                           NilAccessor
                         end
+  end
+
+  def initialize target=nil, options={ }
+    @options  = options
+    self.target = target
 
     @uniq              = options[:uniq] || FormFieldBuilder::UniqId.new
     @target_class_name = options[:class_name] || underscore_more(target.class.name)
