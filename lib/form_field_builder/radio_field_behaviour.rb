@@ -104,7 +104,7 @@ module FormFieldBuilder::RadioFieldBehaviour
   end
 
   def mk_description input_id, txt
-    return nil unless txt.is_a?(Hash) && txt.key?(:description)
+    return nil unless txt.is_a?(Hash) && txt.key?(:description) && (txt[:description].to_s.strip != "")
     "<span class='description'> - #{h txt[:description]}</span>".html_safe
   end
 

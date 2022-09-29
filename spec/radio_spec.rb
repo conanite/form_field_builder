@@ -189,9 +189,10 @@ RSpec::describe FormFieldBuilder::RadioFieldBehaviour do
 <label for='element[sex]_f_123'>Femelle</label></div>
 <div class='radio-option'>
 <input id='element[sex]_o_123' type='radio' name='element[sex]' value='o'>
-<label for='element[sex]_o_123'>Autre</label></div></div>"
+<label for='element[sex]_o_123'>Autre</label>
+<span class='description'> - ou rien du tout</span></div></div>"
     expected = expectable "element-sex", "sexe", input
-    expect(fix_field ffb.all_radio("sex", [["m","Mâle"],["f","Femelle"],["o","Autre"]], id: 123)).to eq expected
+    expect(fix_field ffb.all_radio("sex", [["m","Mâle"],["f", { label: "Femelle", description: "" }],["o",{ label: "Autre", description: "ou rien du tout" }]], id: 123)).to eq expected
   end
 
   it "creates a radio input field with choices, label, description, and post-description" do
