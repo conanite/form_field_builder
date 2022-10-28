@@ -63,7 +63,7 @@ class FormFieldBuilder::Base
   def sub name, prefix, options={}
     v       = (name ? value_for_field(name, options) : nil) || options[:default_value]
     fn      = field_name_for(prefix, options)
-    newopts = @options.merge(prefix: fn).merge(options[:sub] || {})
+    newopts = @options.except(:class_name).merge(prefix: fn).merge(options[:sub] || {})
     self.class.new v, newopts
   end
 
