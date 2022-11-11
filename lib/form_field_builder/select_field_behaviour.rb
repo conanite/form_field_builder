@@ -34,10 +34,10 @@ module FormFieldBuilder::SelectFieldBehaviour
 
   def raw_select field_name, value, choices, options
     value        = parameterise value
-    cssclass     = options[:class] ? " class='#{options[:class]}'" : ""
+    cssclass     = options[:class] ? " class='#{options.delete :class}'" : ""
     choices_html = choices.map { |o| select_option o, value }.join
-    multiple     = " multiple='multiple'" if options[:multiple]
-    "<select name='#{field_name}'#{cssclass}#{multiple}>#{choices_html}</select>"
+    multiple     = " multiple='multiple'" if options.delete(:multiple)
+    "<select name='#{field_name}'#{cssclass}#{multiple}#{input_attrs options}>#{choices_html}</select>"
   end
 
   def select_option option, value

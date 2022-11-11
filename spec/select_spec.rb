@@ -6,7 +6,7 @@ RSpec.describe FormFieldBuilder::Decorated do
   it "should create a select input field with a value" do
     I18n.locale = :en
     ffb = form_field_builder Person.new(city: "p"), input_name_prefix: "c"
-    input = "<select name='c[city]'>
+    input = "<select name='c[city]' id='iNpUtId'>
 <option value='d'>Dublin</option>
 <option value='p' selected='selected'>Paris</option>
 <option value='m'>Madrid</option></select>"
@@ -18,7 +18,7 @@ RSpec.describe FormFieldBuilder::Decorated do
     I18n.locale = :fr
     # ffb = form_field_builder Person.new(unit: "b"), input_name_prefix: "element"
     ffb = form_field_builder Person.new(city: "p"), input_name_prefix: "c"
-    input = "<select name='c[city]'>
+    input = "<select name='c[city]' id='iNpUtId'>
 <option value=''>Choisir...</option>
 <option value='d'>Dublin</option>
 <option value='p' selected='selected'>Paris</option>
@@ -30,7 +30,7 @@ RSpec.describe FormFieldBuilder::Decorated do
   it "creates a select input field with a 'please select' option from a hash" do
     I18n.locale = :fr
     ffb = form_field_builder({ city: "d" }, input_name_prefix: "c")
-    input = "<select name='c[city]'>
+    input = "<select name='c[city]' id='iNpUtId'>
 <option value=''>Choisir...</option>
 <option value='d' selected='selected'>Dublin</option>
 <option value='p'>Paris</option>
@@ -42,7 +42,7 @@ RSpec.describe FormFieldBuilder::Decorated do
   it "should create a select input field with choices from i18n" do
     I18n.locale = :en
     ffb = form_field_builder Person.new(type: "green")
-    input = "<select name='person[type]'>
+    input = "<select name='person[type]' id='iNpUtId'>
 <option value='blue'>Bluish</option>
 <option value='red'>Reddish</option>
 <option value='green' selected='selected'>Greenish</option>
@@ -96,7 +96,7 @@ RSpec.describe FormFieldBuilder::Decorated do
   it "should create a select input field with choices from i18n and a 'please select' option" do
     I18n.locale = :en
     ffb = form_field_builder Person.new(type: "green")
-    input = "<select name='person[type]'>
+    input = "<select name='person[type]' id='iNpUtId'>
 <option value=''>Please select...</option>
 <option value='blue'>Bluish</option>
 <option value='red'>Reddish</option>
@@ -112,7 +112,7 @@ RSpec.describe FormFieldBuilder::Decorated do
     o3 = Person.new id: 518, name: "SHAW"
     I18n.locale = :en
     ffb = form_field_builder GroupPerson.new(person: o3)
-    input = "<select name='group_person[person_id]'>
+    input = "<select name='group_person[person_id]' id='iNpUtId'>
 <option value='516'>JOYCE</option>
 <option value='517'>YEATS</option>
 <option value='518' selected='selected'>SHAW</option></select>"
@@ -126,7 +126,7 @@ RSpec.describe FormFieldBuilder::Decorated do
     o3 = Person.new id: 518, name: "SHAW"
     I18n.locale = :en
     ffb = form_field_builder GroupPerson.new(person: o3)
-    input = "<select name='group_person[person_id]'>
+    input = "<select name='group_person[person_id]' id='iNpUtId'>
 <option value=''>Please select...</option>
 <option value='516'>JOYCE</option>
 <option value='517'>YEATS</option>
@@ -138,7 +138,7 @@ RSpec.describe FormFieldBuilder::Decorated do
   it "should create a select input field with no value, chomping '_id' off name for i18n" do
     I18n.locale = :fr
     ffb = form_field_builder GroupPerson.new
-    input = "<select name='group_person[person_id]'>
+    input = "<select name='group_person[person_id]' id='iNpUtId'>
 <option value='1'>first</option>
 <option value='2'>second</option>
 <option value='3'>third</option></select>"
@@ -152,7 +152,7 @@ RSpec.describe FormFieldBuilder::Decorated do
     I18n.locale = :fr
     person = Person.new(id: 110, name: "The Very Best")
     ffb = form_field_builder GroupPerson.new(person: person)
-    input = "<select name='group_person[person_id]'>
+    input = "<select name='group_person[person_id]' id='iNpUtId'>
 <option value='1'>first</option>
 <option value='110' selected='selected'>The Very Best</option>
 <option value='2'>second</option>
