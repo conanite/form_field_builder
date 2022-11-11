@@ -9,7 +9,7 @@ RSpec.describe FormFieldBuilder::LabelOnly do
     it "should render just a label" do
       ffb = label_builder Person.new, tag: "td"
       expected = "<td class='person-name'>
-<label class='input-label'>
+<label class='input-label' for='iNpUtId'>
 <span class='label-txt'>Nom</span>
 <span class='required'>*</span></label></td>"
 
@@ -19,7 +19,7 @@ RSpec.describe FormFieldBuilder::LabelOnly do
     it "should render just a label even when calling other renderers" do
       ffb = label_builder Person.new, tag: "td"
       expected = "<td class='person-name'>
-<label class='input-label'>
+<label class='input-label' for='iNpUtId'>
 <span class='label-txt'>Nom</span>
 <span class='required'>*</span></label></td>"
 

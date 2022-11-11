@@ -9,11 +9,11 @@ RSpec::describe FormFieldBuilder::Decorated do
     it "should create a required text input field with no value" do
       ffb = form_field_builder Person.new
       expected = "<li class='input_row person-name'>
-<label class='input-label'>
+<label class='input-label' for='iNpUtId'>
 <span class='label-txt'>Nom</span>
 <span class='required'>*</span></label>
 <div class='error_container'></div>
-<input type='text' name='person[name]' value=''/></li>"
+<input type='text' name='person[name]' value='' id='iNpUtId'/></li>"
 
       expect(fix_field ffb.text_input(:name, required: true)).to eq expected
     end
@@ -22,7 +22,7 @@ RSpec::describe FormFieldBuilder::Decorated do
       ffb = form_field_builder Person.new, no_label: true
       expected = "<li class='input_row person-name'>
 <div class='error_container'></div>
-<input type='text' name='person[name]' value=''/></li>"
+<input type='text' name='person[name]' value='' id='iNpUtId'/></li>"
 
       expect(fix_field ffb.text_input(:name)).to eq expected
     end
@@ -31,7 +31,7 @@ RSpec::describe FormFieldBuilder::Decorated do
       ffb = form_field_builder Person.new
       expected = "<li class='input_row person-name'>
 <div class='error_container'></div>
-<input type='text' name='person[name]' value=''/></li>"
+<input type='text' name='person[name]' value='' id='iNpUtId'/></li>"
 
       expect(fix_field ffb.text_input(:name, no_label: true)).to eq expected
     end
@@ -40,7 +40,7 @@ RSpec::describe FormFieldBuilder::Decorated do
       ffb = form_field_builder({ name: "Bosco" }, class_name: "person")
       expected = "<li class='input_row person-name'>
 <div class='error_container'></div>
-<input type='text' name='person[name]' value='Bosco'/></li>"
+<input type='text' name='person[name]' value='Bosco' id='iNpUtId'/></li>"
 
       expect(fix_field ffb.text_input(:name, no_label: true)).to eq expected
     end
@@ -48,17 +48,17 @@ RSpec::describe FormFieldBuilder::Decorated do
     it "uses an alternative subkey to translate label" do
       ffb = form_field_builder Person.new
       expected = "<li class='input_row person-name'>
-<label class='input-label'>
+<label class='input-label' for='iNpUtId'>
 <span class='label-txt'>Vous devriez vraiment mettre quelque chose ici</span></label>
 <div class='error_container'></div>
-<input type='text' name='person[name]' value=''/></li>"
+<input type='text' name='person[name]' value='' id='iNpUtId'/></li>"
 
       expect(fix_field ffb.text_input(:name, label_subkey: "required")).to eq expected
     end
 
     it "should create a text input field with a value" do
       ffb = form_field_builder Person.new(name: "Pops")
-      input = "<input type='text' name='person[name]' value='Pops'/>"
+      input = "<input type='text' name='person[name]' value='Pops' id='iNpUtId'/>"
       expected = expectable "person-name", "Nom", input
       expect(fix_field ffb.text_input("name")).to eq expected
       expect(fix_field ffb.text_input(:name) ).to eq expected
@@ -67,7 +67,7 @@ RSpec::describe FormFieldBuilder::Decorated do
     describe "filtering" do
       it "should create a text input field with a value and explicit #if option" do
         ffb = form_field_builder Person.new(name: "Pops")
-        input = "<input type='text' name='person[name]' value='Pops'/>"
+        input = "<input type='text' name='person[name]' value='Pops' id='iNpUtId'/>"
         expected = expectable "person-name", "Nom", input
         expect(fix_field ffb.text_input("name", if: true)).to eq expected
         expect(fix_field ffb.text_input("name", if: "any non-nil value")).to eq expected
@@ -90,10 +90,10 @@ RSpec::describe FormFieldBuilder::Decorated do
         Entity.gdpr = true
 
         expected = "<li class='input_row person-phone'>
-<label class='input-label'>
+<label class='input-label' for='iNpUtId'>
 <span class='label-txt'>Phone</span></label>
 <div class='error_container'></div>
-<input type='text' name='person[phone]' value='topsecret'/></li>"
+<input type='text' name='person[phone]' value='topsecret' id='iNpUtId'/></li>"
 
         expect(fix_field ffb.text_input("phone")).to eq expected
 
@@ -112,42 +112,42 @@ RSpec::describe FormFieldBuilder::Decorated do
     it "should escape html in text input" do
       ffb = form_field_builder Person.new(name: "<script src='application.js?id=1&DROP TABLE `users`;'/>")
       v = "&lt;script src=&#39;application.js?id=1&amp;DROP TABLE `users`;&#39;/&gt;"
-      input = "<input type='text' name='person[name]' value='#{v}'/>"
+      input = "<input type='text' name='person[name]' value='#{v}' id='iNpUtId'/>"
       expected = expectable "person-name", "Nom", input
       expect(fix_field ffb.text_input(:name)).to eq expected
     end
 
     it "uses an alternative attribute for the value" do
       ffb = form_field_builder Person.new(name: "Blogs", city: "Köln")
-      input = "<input type='text' name='person[name]' value='Köln'/>"
+      input = "<input type='text' name='person[name]' value='Köln' id='iNpUtId'/>"
       expected = expectable "person-name", "Nom", input
       expect(fix_field ffb.text_input(:name, from: :city)).to eq expected
     end
 
     it "respects value override" do
       ffb = form_field_builder Person.new(name: "Blogs")
-      input = "<input type='text' name='person[name]' value='Samuel'/>"
+      input = "<input type='text' name='person[name]' value='Samuel' id='iNpUtId'/>"
       expected = expectable "person-name", "Nom", input
       expect(fix_field ffb.text_input(:name, value: "Samuel")).to eq expected
     end
 
     it "should escape html in text input" do
       ffb = form_field_builder Person.new(name: "<Blogs>")
-      input = "<input type='text' name='person[name]' value='&lt;Blogs&gt;'/>"
+      input = "<input type='text' name='person[name]' value='&lt;Blogs&gt;' id='iNpUtId'/>"
       expected = expectable "person-name", "Nom", input
       expect(fix_field ffb.text_input(:name)).to eq expected
     end
 
     it "is totally fine with a nil #target" do
       ffb = form_field_builder nil, input_name_prefix: 'x', class_name: "person"
-      input = "<input type='text' name='x[name]' value=''/>"
+      input = "<input type='text' name='x[name]' value='' id='iNpUtId'/>"
       expected = expectable "x-name", "Nom", input
       expect(fix_field ffb.text_input(:name) ).to eq expected
     end
 
     it "is totally fine with a nil #target and a value override" do
       ffb = form_field_builder nil, input_name_prefix: 'x', class_name: "person"
-      input = "<input type='text' name='x[name]' value='Worgle'/>"
+      input = "<input type='text' name='x[name]' value='Worgle' id='iNpUtId'/>"
       expected = expectable "x-name", "Nom", input
       expect(fix_field ffb.text_input(:name, value: "Worgle") ).to eq expected
     end

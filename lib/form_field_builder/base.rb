@@ -141,6 +141,10 @@ class FormFieldBuilder::Base
     result
   end
 
+  def input_attrs options
+    "#{placeholder options}#{disabled options}#{as_attributes options[:input]}"
+  end
+
   def hidden name, options={ }
     "<input type='hidden' name='#{field_name_for name, options}' value='#{h parameterise value_for_field name, options}#{disabled options}'/>".html_safe
   end
@@ -148,7 +152,7 @@ class FormFieldBuilder::Base
 
   def text_area name, options={ }
     build_form_field name, options do |field_name, value|
-      "<textarea name='#{field_name}' rows='#{options[:rows] || 6}'#{placeholder options}#{disabled options}>#{preserve_newlines h(value)}</textarea>"
+      "<textarea name='#{field_name}' rows='#{options[:rows] || 6}'#{input_attrs options}>#{preserve_newlines h(value)}</textarea>"
     end
   end
 
@@ -156,13 +160,13 @@ class FormFieldBuilder::Base
 
   def password name, options={ }
     build_form_field name, options do |field_name, value|
-      "<input type='password' name='#{field_name}'#{as_attributes options[:input_attributes]}#{disabled options}/>"
+      "<input type='password' name='#{field_name}'#{input_attrs options}/>"
     end
   end
 
   def file name, options={ }
     build_form_field name, options do |field_name, value|
-      "<input type='file' name='#{field_name}'#{as_attributes options[:input]}#{disabled options}/>"
+      "<input type='file' name='#{field_name}'#{input_attrs options}/>"
     end
   end
 

@@ -8,14 +8,14 @@ RSpec.describe FormFieldBuilder::Decorated do
 
     it "should create a textarea field with a value" do
       ffb = form_field_builder Person.new(bio: "Googy boogy\nfudge wudge\ntinkle winkle")
-      input = "<textarea name='person[bio]' rows='6'>Googy boogy&#x000A;fudge wudge&#x000A;tinkle winkle</textarea>"
+      input = "<textarea name='person[bio]' rows='6' id='iNpUtId'>Googy boogy&#x000A;fudge wudge&#x000A;tinkle winkle</textarea>"
       expected = expectable "person-bio", "Biographie", input
       expect(fix_field ffb.text_area(:bio)).to eq expected
     end
 
     it "should create a textarea field with a value, rows, and placeholder" do
       ffb = form_field_builder Person.new(bio: "Googy boogy\nfudge wudge\ntinkle winkle")
-      input = "<textarea name='person[bio]' rows='12' placeholder='bingo'>Googy boogy&#x000A;fudge wudge&#x000A;tinkle winkle</textarea>"
+      input = "<textarea name='person[bio]' rows='12' placeholder='bingo' id='iNpUtId'>Googy boogy&#x000A;fudge wudge&#x000A;tinkle winkle</textarea>"
       expected = expectable "person-bio", "Biographie", input
       expect(fix_field ffb.text_area(:bio, rows: 12, placeholder: "bingo")).to eq expected
     end
@@ -25,7 +25,7 @@ RSpec.describe FormFieldBuilder::Decorated do
       ffb = form_field_builder Person.new(bio: malicious_text)
 
       v = "&lt;script src=&#39;application.js?id=1&amp;DROP TABLE `users`;&#39;/&gt;Googy boogy&#x000A;fudge wudge&#x000A;tinkle winkle"
-      input = "<textarea name='person[bio]' rows='6'>#{v}</textarea>"
+      input = "<textarea name='person[bio]' rows='6' id='iNpUtId'>#{v}</textarea>"
       expected = expectable "person-bio", "Biographie", input
       expect(fix_field ffb.text_area(:bio)).to eq expected
     end

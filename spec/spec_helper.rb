@@ -34,9 +34,9 @@ module FormFieldBuilderHelpers
     FormFieldBuilder::Decorated.new target, { texts: glossary_texts }.merge(options)
   end
 
-  def expectable cssclass, label, content, desc=nil, tag="li", tag_attributes=""
+  def expectable cssclass, label, content, desc=nil, tag="li", tag_attributes="", opts={}
     "<#{tag} class='input_row #{cssclass}'#{tag_attributes}>
-<label class='input-label'>
+<label class='input-label' for='#{opts[:input_id] || "iNpUtId"}'>
 <span class='label-txt'>#{label}</span></label>
 <div class='error_container'></div>#{desc}
 #{content}</#{tag}>"
@@ -44,12 +44,12 @@ module FormFieldBuilderHelpers
 
   def expect_label cssclass, label, tag="li"
     "<#{tag} class='#{cssclass}'>
-<label class='input-label'>
+<label class='input-label' for='iNpUtId'>
 <span class='label-txt'>#{label}</span></label></#{tag}>"
   end
 
   def fix_field txt
-    strip_each_line txt.to_s.gsub(/<([^\/])/, "\n<\\1").gsub(/\n\s*\n/, "\n").strip
+    strip_each_line txt.to_s.gsub(/<([^\/])/, "\n<\\1").gsub(/\n\s*\n/, "\n").gsub(/_i[^_]+i_/, 'iNpUtId').strip
   end
 end
 

@@ -35,7 +35,7 @@ class FormFieldBuilder::Decorated < FormFieldBuilder::Base
     required = options[:required] ? "<span class='required'>*</span>" : ""
     txt = wrap_tag? field_label(name_for_key, options), "span", :class => "label-txt"
     contents = [txt, required, options[:end_label]].reject(&:blank?).join ' '
-    txt ? "<label class='input-label'>#{contents}</label>" : ""
+    txt ? "<label class='input-label' for='#{options[:input][:id]}'>#{contents}</label>" : ""
   end
 
   def build_description name_for_key, options={}
@@ -64,6 +64,8 @@ class FormFieldBuilder::Decorated < FormFieldBuilder::Base
 
   def build_form_field name, options={ }
     name_for_key = normalized_name name, options
+    options[:input] ||= { }
+    options[:input][:id] ||= "_i#{Time.now.to_i.to_s 36}#{(rand * 10000).to_i.to_s 26}i_"
     self.filtering name_for_key, options do
       options[:placeholder] = texts_for(options).placeholder(target_class_name, name_for_key, options) if (options[:placeholder] == true)
       options[:name_for_key] = name_for_key
