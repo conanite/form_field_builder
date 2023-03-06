@@ -56,7 +56,7 @@ class FormFieldBuilder::Decorated < FormFieldBuilder::Base
     label_node      = build_label_node       name_for_key, options
     desc_node       = build_description      name_for_key, options
     post_desc_node  = build_post_description name_for_key, options
-    "<#{tag} class='input_row #{css_class}'#{as_attributes options[:tag_attributes]}>#{options[:before_label]}#{label_node}#{error}#{desc_node}#{content}#{post_desc_node}</#{tag}>".html_safe
+    "<#{tag} class='input_row #{css_class}'#{as_attributes options[:tag_attributes]}>#{options[:before_label]}#{label_node}#{desc_node}#{content}#{error}#{post_desc_node}</#{tag}>".html_safe
   end
 
   def normalized_name name, options ; options[:preserve_id_suffix] ? name : name.to_s.gsub(/_ids?$/, '') ; end

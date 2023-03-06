@@ -12,8 +12,8 @@ RSpec::describe FormFieldBuilder::Decorated do
 <label class='input-label' for='iNpUtId'>
 <span class='label-txt'>Nom</span>
 <span class='required'>*</span></label>
-<div class='error_container'></div>
-<input type='text' name='person[name]' value='' id='iNpUtId'/></li>"
+<input type='text' name='person[name]' value='' id='iNpUtId'/>
+<div class='error_container'></div></li>"
 
       expect(fix_field ffb.text_input(:name, required: true)).to eq expected
     end
@@ -21,8 +21,8 @@ RSpec::describe FormFieldBuilder::Decorated do
     it "should create a text input field with no label when configured" do
       ffb = form_field_builder Person.new, no_label: true
       expected = "<li class='input_row person-name'>
-<div class='error_container'></div>
-<input type='text' name='person[name]' value='' id='iNpUtId'/></li>"
+<input type='text' name='person[name]' value='' id='iNpUtId'/>
+<div class='error_container'></div></li>"
 
       expect(fix_field ffb.text_input(:name)).to eq expected
     end
@@ -30,8 +30,8 @@ RSpec::describe FormFieldBuilder::Decorated do
     it "should create a text input field with no label when requested" do
       ffb = form_field_builder Person.new
       expected = "<li class='input_row person-name'>
-<div class='error_container'></div>
-<input type='text' name='person[name]' value='' id='iNpUtId'/></li>"
+<input type='text' name='person[name]' value='' id='iNpUtId'/>
+<div class='error_container'></div></li>"
 
       expect(fix_field ffb.text_input(:name, no_label: true)).to eq expected
     end
@@ -39,8 +39,8 @@ RSpec::describe FormFieldBuilder::Decorated do
     it "creates a text input field from a hash" do
       ffb = form_field_builder({ name: "Bosco" }, class_name: "person")
       expected = "<li class='input_row person-name'>
-<div class='error_container'></div>
-<input type='text' name='person[name]' value='Bosco' id='iNpUtId'/></li>"
+<input type='text' name='person[name]' value='Bosco' id='iNpUtId'/>
+<div class='error_container'></div></li>"
 
       expect(fix_field ffb.text_input(:name, no_label: true)).to eq expected
     end
@@ -50,8 +50,8 @@ RSpec::describe FormFieldBuilder::Decorated do
       expected = "<li class='input_row person-name'>
 <label class='input-label' for='iNpUtId'>
 <span class='label-txt'>Vous devriez vraiment mettre quelque chose ici</span></label>
-<div class='error_container'></div>
-<input type='text' name='person[name]' value='' id='iNpUtId'/></li>"
+<input type='text' name='person[name]' value='' id='iNpUtId'/>
+<div class='error_container'></div></li>"
 
       expect(fix_field ffb.text_input(:name, label_subkey: "required")).to eq expected
     end
@@ -92,8 +92,8 @@ RSpec::describe FormFieldBuilder::Decorated do
         expected = "<li class='input_row person-phone'>
 <label class='input-label' for='iNpUtId'>
 <span class='label-txt'>Phone</span></label>
-<div class='error_container'></div>
-<input type='text' name='person[phone]' value='topsecret' id='iNpUtId'/></li>"
+<input type='text' name='person[phone]' value='topsecret' id='iNpUtId'/>
+<div class='error_container'></div></li>"
 
         expect(fix_field ffb.text_input("phone")).to eq expected
 

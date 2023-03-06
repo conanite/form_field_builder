@@ -205,13 +205,13 @@ RSpec::describe FormFieldBuilder::RadioFieldBehaviour do
 <label for='group[purpose]_y_'>nous autorisons</label></div>
 <div class='radio-option'>
 <input id='group[purpose]_n_' type='radio' name='group[purpose]' value='n'>
-<label for='group[purpose]_n_'>nous n&#39;autorisons pas</label></div></div>
-<p class='description'>l'utilisation de notre photo</p>"
-    expected = expectable "group-purpose", "Destination", input
+<label for='group[purpose]_n_'>nous n&#39;autorisons pas</label></div></div>"
     opts = [["y", "nous autorisons"],["n", "nous n'autorisons pas"]]
     desc = { fr: "Merci de nous donner votre accord", en: "Please agree with us"}
     post = { fr: "l'utilisation de notre photo", en: "the use of our photo"}
     r = ffb.radio("purpose", opts, desc: desc, post_desc: post)
+
+    expected = expectable "group-purpose", "Destination", input, nil, "li", "", { }, "<p class='description'>l'utilisation de notre photo</p>"
     expect(fix_field r).to eq expected
   end
 end

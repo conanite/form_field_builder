@@ -192,6 +192,7 @@ class FormFieldBuilder::Base
     2
   end
 
+  def prefix                     ; input_name_prefix                                                      ; end
   def disabled           options ; options[:disabled] ? " disabled='disabled'" : ""                       ; end
   def preserve_newlines      txt ; txt.gsub(/\n/, '&#x000A;').gsub(/\r/, '')                              ; end
   def placeholder        options ; options[:placeholder] ? " placeholder='#{options[:placeholder]}'" : "" ; end

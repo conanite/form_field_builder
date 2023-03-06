@@ -34,12 +34,12 @@ module FormFieldBuilderHelpers
     FormFieldBuilder::Decorated.new target, { texts: glossary_texts }.merge(options)
   end
 
-  def expectable cssclass, label, content, desc=nil, tag="li", tag_attributes="", opts={}
+  def expectable cssclass, label, content, desc=nil, tag="li", tag_attributes="", opts={}, post=nil
     "<#{tag} class='input_row #{cssclass}'#{tag_attributes}>
 <label class='input-label' for='#{opts[:input_id] || "iNpUtId"}'>
 <span class='label-txt'>#{label}</span></label>
-<div class='error_container'></div>#{desc}
-#{content}</#{tag}>"
+#{[desc,content].compact.join("\n")}
+<div class='error_container'></div>#{post.present? ? "\n#{post}" : ""}</#{tag}>"
   end
 
   def expect_label cssclass, label, tag="li"

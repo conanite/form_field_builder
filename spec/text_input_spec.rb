@@ -12,9 +12,9 @@ RSpec.describe FormFieldBuilder::Decorated do
 <li class='input_row person-name'>
 <label class='input-label' for='iNpUtId'>
 <span class='label-txt'>the label of the name of the person</span></label>
-<div class='error_container'></div>
 <p class='description'>the description of the name of the person</p>
-<input type='text' name='person[name]' value='' placeholder='the placeholder of the name of the person' id='iNpUtId'/></li>
+<input type='text' name='person[name]' value='' placeholder='the placeholder of the name of the person' id='iNpUtId'/>
+<div class='error_container'></div></li>
 EXPECTED
       actual = fix_field ffb.text_input(:name, texts: :fake, description: true, placeholder: true)
 
@@ -46,7 +46,7 @@ EXPECTED
     it "looks up description from i18n glossary" do
       ffb = form_field_builder Person.new
       input = "<input type='text' name='person[name]' value='' id='iNpUtId'/>"
-      desc = "\n<p class='description'>The name of the person</p>"
+      desc = "<p class='description'>The name of the person</p>"
       expected = expectable "person-name", "Name", input, desc
       expect(fix_field ffb.text_input(:name, description: true)).to eq expected
     end
@@ -54,7 +54,7 @@ EXPECTED
     it "uses a literal description parameter" do
       ffb = form_field_builder Person.new
       input = "<input type='text' name='person[name]' value='' id='iNpUtId'/>"
-      desc = "\n<p class='description'>to spam you</p>"
+      desc = "<p class='description'>to spam you</p>"
       expected = expectable "person-name", "Name", input, desc
       expect(fix_field ffb.text_input(:name, desc: "to spam you")).to eq expected
     end
@@ -62,7 +62,7 @@ EXPECTED
     it "literal description overrides i18n" do
       ffb = form_field_builder Person.new
       input = "<input type='text' name='person[name]' value='' id='iNpUtId'/>"
-      desc = "\n<p class='description'>to warn you</p>"
+      desc = "<p class='description'>to warn you</p>"
       expected = expectable "person-name", "Name", input, desc
       expect(fix_field ffb.text_input(:name, desc: "to warn you", description: true)).to eq expected
     end
@@ -71,7 +71,7 @@ EXPECTED
       I18n.locale = :fr
       ffb = form_field_builder Person.new
       input = "<input type='text' name='person[name]' value='' id='iNpUtId'/>"
-      desc = "\n<p class='description'>pour vous spammer</p>"
+      desc = "<p class='description'>pour vous spammer</p>"
       expected = expectable "person-name", "Nom", input, desc
       expect(fix_field ffb.text_input(:name, desc: { en: "to wish you well", fr: "pour vous spammer" })).to eq expected
     end
