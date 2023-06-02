@@ -127,10 +127,13 @@ RSpec::describe FormFieldBuilder::RadioFieldBehaviour do
     input = "<div class='radio_container'>
 <div class='radio-option'>
 <input id='x[happy]_true_' type='radio' name='x[happy]' value='true' checked='checked'>
-<label for='x[happy]_true_'>yes</label></div>
+<label for='x[happy]_true_'>yes</label>
+</div>
 <div class='radio-option'>
 <input id='x[happy]_false_' type='radio' name='x[happy]' value='false'>
-<label for='x[happy]_false_'>no</label></div></div>"
+<label for='x[happy]_false_'>no</label>
+</div>
+</div>"
     expected = expectable "x-happy", "Happy", input
     expect(fix_field ffb.boolean("happy")).to eq expected
   end
@@ -141,13 +144,17 @@ RSpec::describe FormFieldBuilder::RadioFieldBehaviour do
     input = "<div class='radio_container'>
 <div class='radio-option'>
 <input id='element[sex]_m_123' type='radio' name='element[sex]' value='m'>
-<label for='element[sex]_m_123'>Male</label></div>
+<label for='element[sex]_m_123'>Male</label>
+</div>
 <div class='radio-option'>
 <input id='element[sex]_f_123' type='radio' name='element[sex]' value='f' checked='checked'>
-<label for='element[sex]_f_123'>Female</label></div>
+<label for='element[sex]_f_123'>Female</label>
+</div>
 <div class='radio-option'>
 <input id='element[sex]_o_123' type='radio' name='element[sex]' value='o'>
-<label for='element[sex]_o_123'>Other</label></div></div>"
+<label for='element[sex]_o_123'>Other</label>
+</div>
+</div>"
     expected = expectable "element-sex", "sex", input
     expect(fix_field ffb.radio("sex", [["m","Male"],["f","Female"],["o","Other"]], id: 123)).to eq expected
   end
@@ -164,13 +171,17 @@ RSpec::describe FormFieldBuilder::RadioFieldBehaviour do
     input = "<div class='radio_container'>
 <div class='radio-option'>
 <input id='thing[widget_id]_1_' type='radio' name='thing[widget_id]' value='1'>
-<label for='thing[widget_id]_1_'>square</label></div>
+<label for='thing[widget_id]_1_'>square</label>
+</div>
 <div class='radio-option'>
 <input id='thing[widget_id]_2_' type='radio' name='thing[widget_id]' value='2'>
-<label for='thing[widget_id]_2_'>round</label></div>
+<label for='thing[widget_id]_2_'>round</label>
+</div>
 <div class='radio-option'>
 <input id='thing[widget_id]_42_' type='radio' name='thing[widget_id]' value='42' checked='checked'>
-<label for='thing[widget_id]_42_'>hexagonal</label></div></div>"
+<label for='thing[widget_id]_42_'>hexagonal</label>
+</div>
+</div>"
     expect(fix_field ffb.object_radio(:widget_id, objects, :shape)).to eq input
   end
 
@@ -180,17 +191,22 @@ RSpec::describe FormFieldBuilder::RadioFieldBehaviour do
     input = "<div class='radio_container'>
 <div class='radio-option'>
 <input id='element[sex]__123' type='radio' name='element[sex]' value=''>
-<label for='element[sex]__123'>tous</label></div>
+<label for='element[sex]__123'>tous</label>
+</div>
 <div class='radio-option'>
 <input id='element[sex]_m_123' type='radio' name='element[sex]' value='m'>
-<label for='element[sex]_m_123'>Mâle</label></div>
+<label for='element[sex]_m_123'>Mâle</label>
+</div>
 <div class='radio-option'>
 <input id='element[sex]_f_123' type='radio' name='element[sex]' value='f' checked='checked'>
-<label for='element[sex]_f_123'>Femelle</label></div>
+<label for='element[sex]_f_123'>Femelle</label>
+</div>
 <div class='radio-option'>
 <input id='element[sex]_o_123' type='radio' name='element[sex]' value='o'>
 <label for='element[sex]_o_123'>Autre</label>
-<span class='description'> - ou rien du tout</span></div></div>"
+<span class='description'> - ou rien du tout</span>
+</div>
+</div>"
     expected = expectable "element-sex", "sexe", input
     expect(fix_field ffb.all_radio("sex", [["m","Mâle"],["f", { label: "Femelle", description: "" }],["o",{ label: "Autre", description: "ou rien du tout" }]], id: 123)).to eq expected
   end
@@ -202,10 +218,13 @@ RSpec::describe FormFieldBuilder::RadioFieldBehaviour do
 <div class='radio_container'>
 <div class='radio-option'>
 <input id='group[purpose]_y_' type='radio' name='group[purpose]' value='y'>
-<label for='group[purpose]_y_'>nous autorisons</label></div>
+<label for='group[purpose]_y_'>nous autorisons</label>
+</div>
 <div class='radio-option'>
 <input id='group[purpose]_n_' type='radio' name='group[purpose]' value='n'>
-<label for='group[purpose]_n_'>nous n&#39;autorisons pas</label></div></div>"
+<label for='group[purpose]_n_'>nous n&#39;autorisons pas</label>
+</div>
+</div>"
     opts = [["y", "nous autorisons"],["n", "nous n'autorisons pas"]]
     desc = { fr: "Merci de nous donner votre accord", en: "Please agree with us"}
     post = { fr: "l'utilisation de notre photo", en: "the use of our photo"}

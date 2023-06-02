@@ -84,9 +84,9 @@ module FormFieldBuilder::RadioFieldBehaviour
   def raw_radio field_name, value, choices, options
     choices_html = choices.map { |choice|
       radio_option field_name, choice[0], choice[1], value, options
-    }.join
+    }.join("\n  ")
 
-    "<div class='radio_container'>#{choices_html}</div>".html_safe
+    "<div class='radio_container'>\n  #{choices_html}\n</div>".html_safe
   end
 
   def radio_option field_name, choice_value, choice_label, field_value, options
@@ -95,7 +95,7 @@ module FormFieldBuilder::RadioFieldBehaviour
     radio_input           = mk_radio_option radio_id, field_name, choice_value, checked
     label_for_radio       = mk_label radio_id, choice_label
     description_for_radio = mk_description radio_id, choice_label
-    ["<div class='radio-option'>", radio_input, label_for_radio, description_for_radio, "</div>"].join.html_safe
+    ["<div class='radio-option'>\n  ", radio_input, label_for_radio, description_for_radio, "\n</div>"].join.html_safe
   end
 
   def mk_radio_option input_id, field_name, choice_value, checked
