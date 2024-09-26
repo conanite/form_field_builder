@@ -125,7 +125,7 @@ class Entity < Model
 end
 
 class Person < Entity
-  attr_accessor :id, :name, :height, :fingers, :import_id, :city, :sex, :photo, :type, :bio, :secret, :phone
+  attr_accessor :id, :name, :height, :fingers, :import_id, :city, :sex, :photo, :type, :bio, :secret, :phone, :eyes
   aduki happy: AdukiBoolean, dob: Date
 
   @@showsex = true

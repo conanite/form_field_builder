@@ -170,6 +170,12 @@ class FormFieldBuilder::Base
     end
   end
 
+  def colour name, options={ }
+    build_form_field name, options do |field_name, value|
+      "<input type='color' name='#{field_name}'#{input_attrs options}/>"
+    end
+  end
+
   def check name, check_value, options={ }
     build_form_field name, options do |field_name, value|
       checked = (check_value == value) ? " checked='checked'" : ''
